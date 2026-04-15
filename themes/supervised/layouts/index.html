@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{ $img := resources.Get "img/hero.png" }}
+<div class="hero-layout">
+  <div class="hero-text">
+    <h1>{{ .Site.Params.headline | default .Site.Title }}</h1>
+    {{ .Content }}
+  </div>
+  {{ if $img }}
+  {{ $sm := $img.Resize "500x webp q85" }}
+  {{ $md := $img.Resize "700x webp q85" }}
+  {{ $lg := $img.Resize "900x webp q85" }}
+  <div class="hero-image">
+    <img src="{{ $lg.RelPermalink }}"
+      srcset="{{ $sm.RelPermalink }} 500w, {{ $md.RelPermalink }} 700w, {{ $lg.RelPermalink }} 900w"
+      sizes="(max-width: 768px) 60vw, 45vw"
+      alt="Supervised"
+      width="{{ $lg.Width }}" height="{{ $lg.Height }}"
+      loading="eager"
+      fetchpriority="high">
+  </div>
+  {{ end }}
+</div>
+{{ with .Params.clients }}
+<section class="clients">
+  <span class="small">Eerder mee samengewerkt</span>
+  <div class="clients-logos">
+    {{ range . }}
+    <img src="/img/clients/{{ .file }}" alt="{{ .name }}" loading="lazy">
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+{{ end }}

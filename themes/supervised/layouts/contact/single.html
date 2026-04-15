@@ -1,0 +1,30 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+{{ .Content }}
+<div class="contact-details">
+  {{ with .Params.email }}
+  <div class="contact-item">
+    <span class="label">E-mail</span>
+    <a href="mailto:{{ . }}">{{ . }}</a>
+  </div>
+  {{ end }}
+  {{ with .Params.phone }}
+  <div class="contact-item">
+    <span class="label">Telefoon</span>
+    <a href="tel:{{ . }}">{{ $.Params.phone_display }}</a>
+  </div>
+  {{ end }}
+  {{ with .Params.address }}
+  <div class="contact-item">
+    <span class="label">Adres</span>
+    <span>{{ . }}</span>
+  </div>
+  {{ end }}
+  {{ with .Params.kvk }}
+  <div class="contact-item">
+    <span class="label">KVK</span>
+    <span>{{ . }}</span>
+  </div>
+  {{ end }}
+</div>
+{{ end }}

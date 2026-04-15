@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}" class="{{ if .IsHome }}home {{ end }}{{ if eq .Section "blog" }}posts {{ end }}{{ if .IsPage }}single {{ end }}{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#021602">
+  <title>{{ if .IsHome }}{{ .Site.Params.headline | default .Site.Title }} | {{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <link rel="icon" type="image/svg+xml" href="/img/logo-dark.svg" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="/img/logo-light.svg" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preload" href="/fonts/GeneralSans-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Params.headline | default .Site.Title }}{{ else }}{{ .Title }}{{ end }}" />
+  <meta property="og:url" content="{{ .Permalink }}" />
+  <meta property="og:type" content="{{ if eq .Section "blog" }}article{{ else }}website{{ end }}" />
+  <meta property="og:site_name" content="{{ .Site.Title }}" />
+  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+  <meta property="og:locale" content="{{ .Site.Params.locale | default .Site.LanguageCode }}" />
+  <meta property="og:image" content="{{ .Site.BaseURL }}img/hero.png" />
+  <link rel="canonical" href="{{ .Permalink }}">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+  <link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}blog/index.xml" title="{{ .Site.Title }} — Blog">
+  {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "{{ .Site.Title }}",
+    "url": "{{ .Site.BaseURL }}",
+    "description": "{{ .Site.Params.description }}",
+    "email": "{{ .Site.Params.email }}",
+    "telephone": "{{ .Site.Params.phone }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ .Site.BaseURL }}img/logo-dark.svg"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Elbalaan 6",
+      "addressLocality": "Oldenzaal",
+      "postalCode": "7577 KH",
+      "addressCountry": "NL"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {{ if eq .Section "blog" -}}
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{ .Title }}",
+    "description": "{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}",
+    "datePublished": "{{ .Date.Format "2006-01-02" }}",
+    "dateModified": "{{ .Lastmod.Format "2006-01-02" }}",
+    "author": { "@type": "Organization", "name": "{{ .Site.Title }}" },
+    "publisher": { "@type": "Organization", "name": "{{ .Site.Title }}", "url": "{{ .Site.BaseURL }}" }
+  }
+  {{- else if .Params.faq -}}
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {{- range $i, $item := .Params.faq }}{{ if $i }},{{ end }}
+      {
+        "@type": "Question",
+        "name": "{{ $item.q }}",
+        "acceptedAnswer": { "@type": "Answer", "text": "{{ $item.a }}" }
+      }
+      {{- end }}
+    ]
+  }
+  {{- else -}}
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "{{ .Title }}",
+    "description": "{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}",
+    "url": "{{ .Permalink }}"
+  }
+  {{- end }}
+  </script>
+</head>
+<body id="top">
+<div class="page">
+
+  <script>
+    if (/Android/i.test(navigator.userAgent)) document.body.classList.add('android');
+  </script>
+
+  <header>
+    <a id="logo" href="/" aria-label="{{ .Site.Title }} logo">
+      {{ partial "logo.html" . }}
+      <span>{{ .Site.Title | lower }}</span>
+    </a>
+
+    <nav aria-label="Hoofdnavigatie">
+      <ul id="menu">
+        {{ range .Site.Menus.main }}
+        <li><a href="{{ .URL }}"{{ if eq $.RelPermalink .URL }} class="active"{{ end }}>{{ .Name }}</a></li>
+        {{ end }}
+      </ul>
+    </nav>
+  </header>
+
+  <div id="glow" aria-hidden="true"></div>
+  <div id="noise" aria-hidden="true"></div>
+
+  <main id="content">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  <footer>
+    <div class="footer-top">
+      <a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a>
+      <nav class="footer-nav" aria-label="Footer navigatie">
+        {{ range .Site.Menus.main }}
+        <a href="{{ .URL }}">{{ .Name }}</a>
+        {{ end }}
+      </nav>
+      <span>{{ now.Format "2006" }}</span>
+    </div>
+    <div class="footer-wordmark" aria-hidden="true">supervised</div>
+  </footer>
+
+  <a id="scrolltotop" href="#top">omhoog</a>
+</div>
+<script defer src="/_vercel/insights/script.js"></script>
+<script>setTimeout(function(){document.body.classList.add('loaded')},300)</script>
+<script>
+  (function(){
+    function s(){var t=window.pageYOffset||document.documentElement.scrollTop;t>0?document.body.parentElement.classList.add('scrollstart'):document.body.parentElement.classList.remove('scrollstart');t>100?document.body.classList.add('scrolled'):document.body.classList.remove('scrolled');window.innerHeight+t>=document.documentElement.scrollHeight?document.body.classList.add('scrolledend'):document.body.classList.remove('scrolledend');}
+    window.addEventListener('scroll',s);s();
+  })();
+  if(window.innerWidth>1000){var e=document.createElement('script');e.src='/js/lenis.min.js';document.body.append(e);}
+</script>
+
+</body>
+</html>

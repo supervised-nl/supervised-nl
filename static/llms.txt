@@ -1,0 +1,27 @@
+# Supervised
+
+## About
+Supervised is een AI-consultancy uit Oldenzaal die MKB-bedrijven helpt om werkprocessen te automatiseren. We beginnen altijd bij het proces, niet bij de technologie. Van procesanalyse tot maatwerksoftware.
+
+## Services
+- Procesanalyse en strategie: we brengen werkprocessen in kaart en maken een concreet actieplan
+- Automatisering en AI-implementatie: van no-code koppelingen (Make, n8n) tot maatwerksoftware
+- Training en doorontwikkeling: documentatie, training, en langdurige ondersteuning
+
+## Key facts
+- Focus: MKB-bedrijven (5-50 medewerkers)
+- Aanpak: procesdenken eerst, dan pas technologie
+- Privacy: EU-hosting, AVG-proof, geen data buiten Europa
+- Locatie: Oldenzaal (kantoor in Enschede), Nederland
+- Tools: Make, n8n, Zapier, en maatwerksoftware waar nodig
+- Website: https://www.supervised.nl
+- Contact: info@supervised.nl | +31 6 44 83 56 56
+- KVK: 97664472
+
+## Content
+- Homepage: /
+- Over ons: /over/
+- Diensten: /diensten/
+- Veelgestelde vragen: /faq/
+- Blog: /blog/
+- Contact: /contact/

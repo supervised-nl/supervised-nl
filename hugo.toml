@@ -1,0 +1,37 @@
+baseURL = 'https://www.supervised.nl/'
+languageCode = 'nl'
+title = 'Supervised'
+theme = 'supervised'
+defaultContentLanguage = 'nl'
+enableRobotsTXT = true
+
+[params]
+  headline = 'Automatiseer wat je dagelijks herhaalt.'
+  description = 'Supervised helpt MKB-bedrijven om werkprocessen te automatiseren met AI. Geen IT-project, wel direct resultaat.'
+  email = 'info@supervised.nl'
+  phone = '+31644835656'
+  address = 'Elbalaan 6, 7577 KH Oldenzaal'
+  author = 'Supervised'
+  locale = 'nl_NL'
+  rss = true
+
+[menu]
+  [[menu.main]]
+    name = 'Over'
+    url = '/over/'
+    weight = 1
+  [[menu.main]]
+    name = 'Diensten'
+    url = '/diensten/'
+    weight = 2
+  [[menu.main]]
+    name = 'Blog'
+    url = '/blog/'
+    weight = 3
+  [[menu.main]]
+    name = 'Contact'
+    url = '/contact/'
+    weight = 4
+
+[permalinks]
+  blog = '/blog/:slug/'
