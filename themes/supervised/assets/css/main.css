@@ -331,6 +331,14 @@ footer {
     }
 }
 
+/* --------------------------- */
+/* diensten
+/* --------------------------- */
+
+.diensten-cards { margin-top: 3.236rem; }
+.dienst-card { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2.618rem; margin-bottom: 2.618rem; }
+.dienst-card h2 { padding-top: 0; }
+
 /* LENIS */
 
 html.lenis, html.lenis body {height: auto;}

@@ -129,6 +129,9 @@
       {{- if and (eq .Section "blog") .IsPage }},
       { "@type": "ListItem", "position": 2, "name": "Blog", "item": "{{ .Site.BaseURL }}blog/" },
       { "@type": "ListItem", "position": 3, "name": "{{ .Title }}", "item": "{{ .Permalink }}" }
+      {{- else if and .IsPage (ne .Section "") (ne .Section "blog") }},
+      { "@type": "ListItem", "position": 2, "name": "{{ .Parent.Title }}", "item": "{{ .Parent.Permalink }}" },
+      { "@type": "ListItem", "position": 3, "name": "{{ .Title }}", "item": "{{ .Permalink }}" }
       {{- else }},
       { "@type": "ListItem", "position": 2, "name": "{{ .Title }}", "item": "{{ .Permalink }}" }
       {{- end }}
