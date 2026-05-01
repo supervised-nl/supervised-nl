@@ -94,6 +94,20 @@
       {{- end }}
     ]
   }
+  {{- else if eq .Params.schema "person" -}}
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "{{ .Title }}",
+    "url": "{{ .Permalink }}",
+    "sameAs": "{{ .Params.linkedin }}",
+    "jobTitle": "Eigenaar",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "{{ .Site.Title }}",
+      "url": "{{ .Site.BaseURL }}"
+    }
+  }
   {{- else -}}
   {
     "@context": "https://schema.org",
