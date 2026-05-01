@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#021602">
-  <title>{{ if .IsHome }}{{ .Site.Params.headline | default .Site.Title }} | {{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+  <title>{{ .Title }} | {{ .Site.Title }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
   <meta name="author" content="{{ if eq .Section "blog" }}Jeroen Gijselaar{{ else }}{{ .Site.Title }}{{ end }}">
   <link rel="icon" type="image/svg+xml" href="/img/logo-dark.svg" media="(prefers-color-scheme: dark)">
