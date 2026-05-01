@@ -33,5 +33,10 @@ enableRobotsTXT = true
     url = '/contact/'
     weight = 4
 
+[sitemap]
+  changefreq = 'monthly'
+  priority = 0.5
+  filename = 'sitemap.xml'
+
 [permalinks]
   blog = '/blog/:slug/'

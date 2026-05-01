@@ -38,12 +38,11 @@ body {
     inset: 0;
     background: radial-gradient(circle max(48vw, 55vh) at -17vw 52%, #FF6205 0%, rgba(255,98,5,0.4) 45%, transparent 80%);
     filter: blur(22px);
-    opacity: 0;
     pointer-events: none;
     z-index: -1;
-    transition: opacity 1.2s ease-in-out;
+    animation: glowIn 1.2s ease-in-out forwards;
 }
-.loaded #glow {opacity: 1;}
+@keyframes glowIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* --------------------------- */
 /* general
@@ -218,11 +217,12 @@ hr {border: none; border-top: 1px solid rgba(255,255,197,0.15); margin: 1.618em 
   object-position: center 25%;
   border-radius: 2.618rem;
   box-shadow: 0 24px 80px rgba(0,0,0,0.55);
-  opacity: 0;
-  transform: rotate(4deg) translateY(16px);
-  transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
+  animation: heroIn 1s ease 0.2s both;
 }
-body.loaded #content .hero-image img {opacity: 1; transform: rotate(4deg) translateY(0);}
+@keyframes heroIn {
+  from { opacity: 0; transform: rotate(4deg) translateY(16px); }
+  to   { opacity: 1; transform: rotate(4deg) translateY(0); }
+}
 @media (max-width: 800px) {
   .hero-layout {flex-direction: column; height: auto;}
   .hero-text {padding: 6.854rem clamp(1.236rem, 3vw, 2.618rem) 2.618rem;}
@@ -330,6 +330,14 @@ footer {
         );
     }
 }
+
+/* --------------------------- */
+/* diensten
+/* --------------------------- */
+
+.diensten-cards { margin-top: 3.236rem; }
+.dienst-card { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2.618rem; margin-bottom: 2.618rem; }
+.dienst-card h2 { padding-top: 0; }
 
 /* LENIS */
 

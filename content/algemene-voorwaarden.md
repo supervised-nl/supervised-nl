@@ -1,6 +1,9 @@
 ---
 title: "Algemene voorwaarden"
 description: "De algemene voorwaarden van Supervised, gevestigd in Oldenzaal. Van toepassing op alle offertes, opdrachten en diensten."
+sitemap:
+  changefreq: yearly
+  priority: 0.3
 ---
 
 Deze voorwaarden gelden voor alle offertes, opdrachten en diensten van Supervised, gevestigd aan Elbalaan 6, 7577 KH Oldenzaal (KVK 97664472), tenzij schriftelijk anders overeengekomen.

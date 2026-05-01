@@ -1,6 +1,9 @@
 ---
 title: "Privacyverklaring"
 description: "Supervised verwerkt jouw persoonsgegevens zorgvuldig en conform de AVG. Lees hier welke gegevens we verzamelen, waarom en wat jouw rechten zijn."
+sitemap:
+  changefreq: yearly
+  priority: 0.3
 ---
 
 Supervised, gevestigd aan Elbalaan 6, 7577 KH Oldenzaal (KVK 97664472), bereikbaar via [info@supervised.nl](mailto:info@supervised.nl), is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in deze verklaring.

@@ -1,21 +1,23 @@
 # Supervised
 
-## About
-Supervised is een AI-consultancy uit Oldenzaal, Nederland. Opgericht door Jeroen Gijselaar. We helpen MKB-bedrijven om werkprocessen te automatiseren. De aanpak: eerst het proces begrijpen, dan pas technologie inzetten.
+## Over
+Supervised is een solo AI-consultancy uit Oldenzaal, Nederland. Opgericht en gerund door Jeroen Gijselaar. Ik help MKB-bedrijven om werkprocessen te automatiseren met AI. De aanpak: eerst het proces begrijpen, dan pas technologie inzetten.
 
-## Dienstverlening
-- **Procesanalyse en strategie**: werkprocessen in kaart brengen, knelpunten identificeren, concreet actieplan opstellen
-- **Automatisering en AI-implementatie**: van no-code koppelingen (Make, n8n, Zapier) tot maatwerksoftware en AI-integraties
-- **Training en doorontwikkeling**: documentatie, training voor medewerkers, langdurige ondersteuning
+## Diensten
+- **AI workshop op maat**: workshops voor beginners tot gevorderden op de tools die de klant al gebruikt — Claude, ChatGPT, Gemini, Mistral of een combinatie. URL: /diensten/ai-workshop/
+- **EU AI Act basistraining**: team in een halve dag op het verplichte basisniveau AI-kennis brengen, conform de EU AI Act (verplicht sinds februari 2025). URL: /diensten/eu-ai-act-training/
+- **Procesanalyse op de werkvloer**: meelopen met het team, werkprocessen in kaart brengen, concreet rapport met verbeterpunten en automatiseringsmogelijkheden. URL: /diensten/procesanalyse/
+- **Prototype in a Day**: in één werkdag een werkend prototype bouwen van een AI-idee — geen mockup maar iets wat draait. URL: /diensten/prototype-in-a-day/
+- **AI-implementatie in je werkproces**: werkende AI-oplossingen ontwerpen en integreren in dagelijkse processen, zonder afhankelijkheid na oplevering. URL: /diensten/ai-implementatie/
 
 ## Doelgroep
-Nederlandse MKB-bedrijven met 5 tot 100 medewerkers. Sectoren: zakelijke dienstverlening, productie, zorg, techniek. Typische klant: directeur of eigenaar die herhalende handmatige processen wil aanpakken zonder afhankelijk te worden van een grote IT-afdeling.
+Nederlandse MKB-bedrijven met 10 tot 100 medewerkers. Typische klant: directeur of eigenaar die herhalende handmatige processen wil aanpakken zonder afhankelijk te worden van een grote IT-afdeling.
 
 ## Aanpak
-Supervised werkt proces-first: we beginnen niet bij de technologie maar bij de vraag wat er daadwerkelijk mis gaat in het werkproces. Veelvoorkomende use cases: e-mailverwerking, orderverwerking, rapportage-automatisering, datavalidatie, formulierkoppelingen.
+Supervised werkt proces-first: niet bij de technologie beginnen maar bij de vraag wat er daadwerkelijk misgaat in het werkproces. Veelvoorkomende use cases: e-mailverwerking, orderverwerking, rapportage-automatisering, datavalidatie, formulierkoppelingen.
 
 ## Oprichter
-Jeroen Gijselaar — eigenaar en consultant. Achtergrond in software en AI. Werkt samen met Tech42 (partners Chris, Wouter en Tom) voor aanvullende capaciteit.
+Jeroen Gijselaar — eigenaar en consultant. Achtergrond in software en AI.
 
 ## Kernwaarden
 - Eenvoud boven complexiteit
@@ -24,19 +26,25 @@ Jeroen Gijselaar — eigenaar en consultant. Achtergrond in software en AI. Werk
 - Privacy by default: EU-hosting, AVG-proof, geen data buiten Europa
 
 ## Technologie
-Make, n8n, Zapier, Python, Next.js, Supabase, en maatwerksoftware waar standaard tools tekortschieten. Geen voorkeur voor een specifiek platform — de keuze volgt het probleem.
+Make, n8n, Python, Next.js en maatwerksoftware waar standaard tools tekortschieten. Geen voorkeur voor een specifiek platform — de keuze volgt het probleem.
 
 ## Key facts
 - KVK: 97664472
-- Kantooradres: Rigtersbleek-Zandvoort 10, Enschede
+- BTW: NL005280988B17
+- Adres: Elbalaan 6, 7577 KH Oldenzaal
 - Website: https://www.supervised.nl
 - Contact: info@supervised.nl | +31 6 44 83 56 56
 - Taal: Nederlands (primair), Engels op verzoek
 
-## Content
+## Pagina's
 - Homepage: /
-- Over ons en aanpak: /over/
-- Diensten: /diensten/
+- Over Jeroen Gijselaar: /over/
+- Diensten overzicht: /diensten/
+- AI workshop op maat: /diensten/ai-workshop/
+- EU AI Act basistraining voor werknemers: /diensten/eu-ai-act-training/
+- Procesanalyse op de werkvloer: /diensten/procesanalyse/
+- Prototype in a Day: /diensten/prototype-in-a-day/
+- AI-implementatie in je werkproces: /diensten/ai-implementatie/
 - Veelgestelde vragen: /faq/
 - Blog: /blog/
 - Contact: /contact/

@@ -1,6 +1,9 @@
 ---
 title: "AI automatisering voor het MKB"
 description: "Supervised helpt MKB-bedrijven om werkprocessen te automatiseren met AI. Geen IT-project, wel direct resultaat. Bekijk onze aanpak."
+sitemap:
+  changefreq: weekly
+  priority: 1.0
 clients:
   - name: "Ergonad"
     file: "ergonad.svg"
@@ -18,4 +21,4 @@ clients:
 
 Supervised helpt MKB-bedrijven om werkprocessen slim in te richten met AI. Geen IT-project, geen hype. Stap voor stap, met resultaat dat je meteen merkt.
 
-[Bekijk hoe we werken →](/diensten/)
+[Bekijk onze diensten →](/diensten/)
