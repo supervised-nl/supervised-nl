@@ -6,4 +6,4 @@ sitemap:
   priority: 0.8
 ---
 
-Supervised helpt MKB-bedrijven op vijf manieren met AI. Van een eerste oriëntatie tot werkende AI in je dagelijkse processen.
+Supervised helpt MKB-bedrijven met AI. Van een eerste oriëntatie tot werkende AI in je dagelijkse processen.
