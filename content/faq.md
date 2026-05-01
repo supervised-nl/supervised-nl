@@ -2,6 +2,9 @@
 title: "Veelgestelde vragen over AI automatisering"
 description: "Antwoorden op veelgestelde vragen over kosten, doorlooptijd, privacy en eigenaarschap bij AI-automatisering voor het MKB."
 layout: "faq"
+sitemap:
+  changefreq: monthly
+  priority: 0.8
 faq:
   - q: "Wat kost een traject?"
     a: "Dat hangt af van wat je wilt aanpakken. Een gerichte AI-implementatie van één proces begint al vanaf een paar honderd euro. Grotere trajecten kosten meer, maar we maken altijd eerst een helder voorstel. Geen verrassingen achteraf."

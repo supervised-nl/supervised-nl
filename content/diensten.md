@@ -1,6 +1,9 @@
 ---
 title: "Wat we doen"
 description: "Van procesanalyse tot AI-implementatie en maatwerksoftware. Supervised bouwt oplossingen die dagelijks werken, niet alleen in een demo."
+sitemap:
+  changefreq: monthly
+  priority: 0.8
 ---
 
 Geen standaardpakketten. We kijken eerst wat jouw situatie vraagt, en dan pas wat we bouwen.
