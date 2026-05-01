@@ -32,6 +32,7 @@
   <meta name="twitter:image" content="{{ $ogImg.Permalink }}" />
   {{ end }}
   <link rel="canonical" href="{{ .Permalink }}">
+  {{ if or (eq .Kind "taxonomy") (eq .Kind "term") }}<meta name="robots" content="noindex, follow">{{ end }}
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
   <link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}blog/index.xml" title="{{ .Site.Title }} — Blog">
   {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
@@ -107,6 +108,23 @@
       "@type": "Organization",
       "name": "{{ .Site.Title }}",
       "url": "{{ .Site.BaseURL }}"
+    }
+  }
+  {{- else if and (eq .Section "diensten") .IsPage -}}
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "{{ .Title }}",
+    "description": "{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}",
+    "url": "{{ .Permalink }}",
+    "provider": {
+      "@type": "Organization",
+      "name": "{{ .Site.Title }}",
+      "url": "{{ .Site.BaseURL }}"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Nederland"
     }
   }
   {{- else -}}
