@@ -19,6 +19,6 @@ clients:
     file: "happy_spaces.svg"
 ---
 
-Supervised helpt MKB-bedrijven om werkprocessen slim in te richten met AI. Geen IT-project, geen hype. Stap voor stap, met resultaat dat je meteen merkt.
+Supervised helpt MKB-bedrijven werkprocessen slim in te richten met AI. Stap voor stap, direct merkbaar.
 
 [Bekijk onze diensten →](/diensten/)
