@@ -89,7 +89,7 @@
             var dy = lastY - lcy;
             var dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < 120 && dist > 0.5) {
-              var pull = (1 - dist / 120) * 8;
+              var pull = (1 - dist / 120) * 6;
               tgtX = (dx / dist) * pull;
               tgtY = (dy / dist) * pull;
             }
