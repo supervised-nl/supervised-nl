@@ -295,6 +295,56 @@ hr {border: none; border-top: 1px solid var(--rule); margin: 1.618em 0;}
   #content .hero-image img {width: 60vw; height: 72vw; border-radius: var(--radius-md);}
 }
 
+/* --------------------------- */
+/* content stagger fade-in     */
+/* --------------------------- */
+
+@keyframes contentIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* hero pages: stagger inside .hero-text */
+.hero-text > * {
+  animation: contentIn 600ms var(--ease-out) both;
+}
+.hero-text > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-text > *:nth-child(2) { animation-delay: 0.22s; }
+.hero-text > *:nth-child(3) { animation-delay: 0.34s; }
+.hero-text > *:nth-child(4) { animation-delay: 0.46s; }
+
+/* standard pages: h1 + intro stagger */
+#content > h1 {
+  animation: contentIn 600ms var(--ease-out) 0.1s both;
+}
+#content > h1 + p,
+#content > .small.date + h1 {
+  animation: contentIn 600ms var(--ease-out) 0.22s both;
+}
+#content > .small.date {
+  animation: contentIn 600ms var(--ease-out) 0.05s both;
+}
+
+/* diensten cards stagger (A3) */
+.dienst-card {
+  animation: contentIn 500ms var(--ease-out) both;
+}
+.dienst-card:nth-child(1) { animation-delay: 0.34s; }
+.dienst-card:nth-child(2) { animation-delay: 0.42s; }
+.dienst-card:nth-child(3) { animation-delay: 0.5s; }
+.dienst-card:nth-child(4) { animation-delay: 0.58s; }
+.dienst-card:nth-child(5) { animation-delay: 0.66s; }
+
+/* blog items stagger */
+.blog-item {
+  animation: contentIn 500ms var(--ease-out) both;
+}
+.blog-item:nth-child(1) { animation-delay: 0.3s; }
+.blog-item:nth-child(2) { animation-delay: 0.38s; }
+.blog-item:nth-child(3) { animation-delay: 0.46s; }
+.blog-item:nth-child(4) { animation-delay: 0.54s; }
+.blog-item:nth-child(5) { animation-delay: 0.62s; }
+
 
 .contact-details {margin-top: 2.618rem; display: grid; gap: 2.618rem;}
 .contact-item .label {display: block; font-size: 0.618rem; text-transform: uppercase; letter-spacing: 0.382em; opacity: 0.65; margin-bottom: 0.382rem;}
@@ -352,6 +402,17 @@ footer {
   margin-bottom: -0.236em;
   text-align: center;
   display: block;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .footer-wordmark {
+    animation: wordmark-focus linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 60%;
+  }
+  @keyframes wordmark-focus {
+    from { filter: blur(8px); transform: scale(0.96); color: rgba(255, 255, 255, 0.02); }
+    to   { filter: blur(0); transform: scale(1); color: rgba(255, 255, 255, 0.12); }
+  }
 }
 @media (max-width: 600px) {
   .footer-top { flex-direction: column; align-items: flex-start; gap: 0.618rem; }
