@@ -37,8 +37,8 @@
       if (/→\s*$/.test(el.textContent)) {
         magnetics.push(el);
         el.style.display = 'inline-block';
-        el.style.transition = 'transform 250ms cubic-bezier(0.22, 1, 0.36, 1)';
         el.style.willChange = 'transform';
+        el._mx = 0; el._my = 0;
       }
     });
 
@@ -72,28 +72,36 @@
         glow.style.setProperty('--glow-y', cy.toFixed(2) + 'vh');
       }
 
-      // Magnetic CTAs (pull within 80px, max 6px)
+      // Magnetic CTAs — JS lerp instead of CSS transition.
+      // Range 120px, max pull 8px. Lerp factor 0.22 = ~80ms to settle.
       var anyMagnetic = false;
       if (lastX >= 0 && magnetics.length) {
         var vh = window.innerHeight;
         magnetics.forEach(function(link){
           var rect = link.getBoundingClientRect();
-          // Skip offscreen links — no chance of being in range
-          if (rect.bottom < -80 || rect.top > vh + 80) {
-            if (link.style.transform) link.style.transform = '';
-            return;
+          var tgtX = 0, tgtY = 0;
+          if (rect.bottom >= -120 && rect.top <= vh + 120) {
+            // Adjust rect for current transform so we measure the link's
+            // resting position, not its currently-pulled position.
+            var lcx = rect.left + rect.width / 2 - link._mx;
+            var lcy = rect.top + rect.height / 2 - link._my;
+            var dx = lastX - lcx;
+            var dy = lastY - lcy;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120 && dist > 0.5) {
+              var pull = (1 - dist / 120) * 8;
+              tgtX = (dx / dist) * pull;
+              tgtY = (dy / dist) * pull;
+            }
           }
-          var lcx = rect.left + rect.width / 2;
-          var lcy = rect.top + rect.height / 2;
-          var dx = lastX - lcx;
-          var dy = lastY - lcy;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          // Guard divide-by-zero when cursor sits at link center
-          if (dist < 80 && dist > 0.5) {
-            var pull = (1 - dist / 80) * 6;
-            link.style.transform = 'translate(' + ((dx / dist) * pull).toFixed(1) + 'px, ' + ((dy / dist) * pull).toFixed(1) + 'px)';
+          // Lerp current state toward target
+          link._mx += (tgtX - link._mx) * 0.22;
+          link._my += (tgtY - link._my) * 0.22;
+          if (Math.abs(link._mx) > 0.05 || Math.abs(link._my) > 0.05) {
+            link.style.transform = 'translate(' + link._mx.toFixed(2) + 'px, ' + link._my.toFixed(2) + 'px)';
             anyMagnetic = true;
           } else if (link.style.transform) {
+            link._mx = 0; link._my = 0;
             link.style.transform = '';
           }
         });
