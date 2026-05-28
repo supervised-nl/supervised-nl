@@ -1,7 +1,6 @@
 ---
 title: "Jeroen Gijselaar"
 description: "Supervised is Jeroen Gijselaar. Solo AI-consultancy voor Nederlands MKB. Procesdenken eerst, dan pas technologie."
-type: "over"
 bodyClass: "over"
 schema: "person"
 sitemap:

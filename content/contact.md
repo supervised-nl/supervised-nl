@@ -1,7 +1,6 @@
 ---
 title: "Laten we kennismaken"
 description: "Geen verplichtingen, geen offerte die je niet gevraagd hebt. Vertel waar je tegenaan loopt en dan kijken we samen wat er mogelijk is."
-type: "contact"
 sitemap:
   changefreq: yearly
   priority: 0.5
