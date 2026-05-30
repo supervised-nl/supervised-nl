@@ -82,11 +82,16 @@
 
 {{ with .Params.clients }}
 <section class="clients">
-  <span class="small">Eerder mee samengewerkt</span>
-  <div class="clients-logos">
-    {{ range . }}
-    <img src="/img/clients/{{ .file }}" alt="{{ .name }}" loading="lazy">
-    {{ end }}
+  <span class="small clients-eyebrow">Eerder mee samengewerkt</span>
+  <div class="clients-track" aria-label="Logo's van klanten">
+    <div class="clients-logos">
+      {{ range . }}
+      <img src="/img/clients/{{ .file }}" alt="{{ .name }}" loading="lazy">
+      {{ end }}
+      {{ range . }}
+      <img src="/img/clients/{{ .file }}" alt="" aria-hidden="true" loading="lazy">
+      {{ end }}
+    </div>
   </div>
 </section>
 {{ end }}

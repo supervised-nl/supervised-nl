@@ -1,16 +1,15 @@
 (function(){
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 1. Scroll-state classes via IntersectionObserver (was scroll-listener)
-  var top = document.getElementById('top');
-  if (top) {
-    new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        document.body.parentElement.classList.toggle('scrollstart', e.intersectionRatio < 1);
-        document.body.classList.toggle('scrolled', !e.isIntersecting);
-      });
-    }, { threshold: [0.99, 1] }).observe(top);
+  // 1. Scroll-state classes — show #scrolltotop after half a viewport scroll
+  function updateScrollState(){
+    var y = window.scrollY;
+    document.documentElement.classList.toggle('scrollstart', y > 0);
+    document.body.classList.toggle('scrolled', y > window.innerHeight * 0.5);
   }
+  window.addEventListener('scroll', updateScrollState, { passive: true });
+  window.addEventListener('resize', updateScrollState, { passive: true });
+  updateScrollState();
 
   // End-of-page sentinel
   var footer = document.querySelector('footer');

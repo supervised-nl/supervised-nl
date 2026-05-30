@@ -3,10 +3,10 @@
   <div class="page-grid-header">
     <h1>{{ .Title }}</h1>
     {{ with .Description }}<p class="page-grid-lead">{{ . }}</p>{{ end }}
-    <p class="page-grid-aside"><a class="small" href="/diensten/">← Alle diensten</a></p>
   </div>
   <div class="page-grid-body">
     {{ .Content }}
   </div>
+  <p class="page-grid-aside"><a class="small" href="/diensten/">← Alle diensten</a></p>
 </div>
 {{ end }}
