@@ -18,7 +18,7 @@
     <img src="{{ $md.RelPermalink }}"
       srcset="{{ $sm.RelPermalink }} 400w, {{ $md.RelPermalink }} 700w"
       sizes="(max-width: 800px) 60vw, 28vw"
-      alt="Jeroen Gijselaar — Supervised"
+      alt="Jeroen Gijselaar, Supervised"
       width="{{ $md.Width }}" height="{{ $md.Height }}"
       loading="eager"
       fetchpriority="high">
@@ -82,8 +82,7 @@
 
 {{ with .Params.clients }}
 <section class="clients">
-  <span class="small clients-eyebrow">Eerder mee samengewerkt</span>
-  <div class="clients-track" aria-label="Logo's van klanten">
+  <div class="clients-track" aria-label="Logo's van klanten waarmee eerder is samengewerkt">
     <div class="clients-logos">
       {{ range . }}
       <img src="/img/clients/{{ .file }}" alt="{{ .name }}" loading="lazy">

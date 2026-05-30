@@ -47,10 +47,10 @@ clients:
   - name: "Happy Spaces"
     file: "happy_spaces.svg"
 closing:
-  question: "Wil je AI praktisch maken voor je team?"
+  question: "Stuur een mail."
   cta:
-    label: "Neem contact op"
-    url: "/contact/"
+    label: "info@supervised.nl"
+    url: "mailto:info@supervised.nl"
 ---
 
-Supervised helpt MKB-bedrijven werkprocessen slim in te richten met AI. Spreker, trainer en bouwer. Geen algemeen verhaal over de toekomst, wel werkende oplossingen die je morgen gebruikt.
+Spreker, trainer en bouwer voor MKB-teams. Werkende AI in je proces, geen toekomstverhaal.

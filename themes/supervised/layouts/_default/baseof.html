@@ -34,7 +34,7 @@
   <link rel="canonical" href="{{ .Permalink }}">
   {{ if or (eq .Kind "taxonomy") (eq .Kind "term") }}<meta name="robots" content="noindex, follow">{{ end }}
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-  <link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}blog/index.xml" title="{{ .Site.Title }} — Blog">
+  <link rel="alternate" type="application/rss+xml" href="{{ .Site.BaseURL }}blog/index.xml" title="{{ .Site.Title }}, Blog">
   {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
   <script type="application/ld+json">
@@ -182,13 +182,6 @@
 
   <div id="glow" aria-hidden="true"></div>
   <div id="noise" aria-hidden="true"></div>
-  <div id="glow-pulses" aria-hidden="true">
-    <span class="glow-pulse glow-pulse-1"></span>
-    <span class="glow-pulse glow-pulse-2"></span>
-    <span class="glow-pulse glow-pulse-3"></span>
-    <span class="glow-pulse glow-pulse-4"></span>
-    <span class="glow-pulse glow-pulse-5"></span>
-  </div>
 
   <main id="content">
     {{ block "main" . }}{{ end }}
