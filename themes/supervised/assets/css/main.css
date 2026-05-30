@@ -8,12 +8,12 @@
 
 :root {
   /* Surface */
-  --bg: #021602;                                  /* unchanged — brand signature */
+  --bg: #021602;                                  /* unchanged , brand signature */
 
   /* Ink (tinted whites) */
   --ink-1: oklch(0.985 0.005 145 / 1);            /* strong */
   --ink-2: oklch(0.985 0.005 145 / 0.8);          /* body */
-  --ink-3: oklch(0.985 0.005 145 / 0.65);         /* nav/footer — UP from 0.45 (WCAG) */
+  --ink-3: oklch(0.985 0.005 145 / 0.65);         /* nav/footer , UP from 0.45 (WCAG) */
   --ink-4: oklch(0.985 0.005 145 / 0.35);         /* footer-right, subtle */
 
   /* Accent (warm orange) */
@@ -116,7 +116,7 @@ a:hover {background-size: 100% 1px, 100% 1px;}
 /* --------------------------- */
 
 #noise {
-    /* 5 lines — 6 columns at 16.67% */
+    /* 5 lines , 6 columns at 16.67% */
     background-image: linear-gradient(
         to right,
         transparent 16.67%, rgba(255,255,197,0.2) 16.67%, rgba(255,255,197,0.2) calc(16.67% + 1px),
@@ -216,7 +216,7 @@ hr {border: none; border-top: 1px solid var(--rule); margin: 1.618em 0;}
 .small.date {margin: 1rem 0 0.146rem; display: inline-block; opacity: 0.65;}
 
 
-/* shared 2-column editorial layout — title-left, content-right */
+/* shared 2-column editorial layout , title-left, content-right */
 .page-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -384,7 +384,7 @@ hr {border: none; border-top: 1px solid var(--rule); margin: 1.618em 0;}
   position: relative;
 }
 
-/* ambient orange glow pulses — one per noise line, random-feeling timing */
+/* ambient orange glow pulses , one per noise line, random-feeling timing */
 /* shared mask matches the noise's downward fade so pulses dissolve like the lines do */
 #glow-pulses {
   position: fixed;
@@ -657,7 +657,7 @@ footer {
 }
 
 /* --------------------------- */
-/* werkwijze — editorial typographic, distinct from home-card */
+/* werkwijze , editorial typographic, distinct from home-card */
 /* --------------------------- */
 
 .home-steps { margin-top: 3.236rem; }
@@ -807,7 +807,7 @@ footer {
   min-height: auto;
 }
 
-/* closing — centered CTA, breaks the left-rail rhythm intentionally */
+/* closing , centered CTA, breaks the left-rail rhythm intentionally */
 .home-closing {
   display: block;
   text-align: center;

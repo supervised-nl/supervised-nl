@@ -1,7 +1,7 @@
 (function(){
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 1. Scroll-state classes — show #scrolltotop after half a viewport scroll
+  // 1. Scroll-state classes , show #scrolltotop after half a viewport scroll
   function updateScrollState(){
     var y = window.scrollY;
     document.documentElement.classList.toggle('scrollstart', y > 0);
@@ -21,7 +21,7 @@
     }, { rootMargin: '0px 0px -1px 0px' }).observe(footer);
   }
 
-  // 2. Lenis smooth-scroll — desktop + reduced-motion-respecting
+  // 2. Lenis smooth-scroll , desktop + reduced-motion-respecting
   if (window.innerWidth > 1000 && !reduced) {
     var lenisScript = document.createElement('script');
     lenisScript.src = '/js/lenis.min.js';
