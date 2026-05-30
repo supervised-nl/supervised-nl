@@ -82,7 +82,8 @@
 
 {{ with .Params.clients }}
 <section class="clients">
-  <div class="clients-track" aria-label="Logo's van klanten waarmee eerder is samengewerkt">
+  <span class="small clients-eyebrow">Eerder mee samengewerkt</span>
+  <div class="clients-track" aria-label="Logo's van klanten">
     <div class="clients-logos">
       {{ range . }}
       <img src="/img/clients/{{ .file }}" alt="{{ .name }}" loading="lazy">
