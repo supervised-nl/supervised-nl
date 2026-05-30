@@ -332,7 +332,7 @@ hr {border: none; border-top: 1px solid var(--rule); margin: 1.618em 0;}
   gap: clamp(3rem, 6vw, 5rem);
   width: max-content;
   align-items: center;
-  animation: clients-scroll 36s linear infinite;
+  animation: clients-scroll 20s linear infinite;
 }
 .clients-logos:hover { animation-play-state: paused; }
 @keyframes clients-scroll {
@@ -354,7 +354,7 @@ hr {border: none; border-top: 1px solid var(--rule); margin: 1.618em 0;}
 }
 @media (max-width: 750px) {
   #content .clients-logos img { height: 1rem !important; }
-  .clients-logos { animation-duration: 48s; gap: clamp(2rem, 8vw, 3rem); }
+  .clients-logos { animation-duration: 30s; gap: clamp(2rem, 8vw, 3rem); }
 }
 @media (prefers-reduced-motion: reduce) {
   .clients-track {
