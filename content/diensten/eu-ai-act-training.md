@@ -16,7 +16,7 @@ Na afloop weet je team waar de grenzen liggen. En je kunt aantonen dat je aan de
 ## Wat we in de training bespreken
 
 - Wat mag jouw team wel en niet in een AI-tool stoppen
-- Hoe je dataveiligheid waarborgt: welke tools EU-hostend zijn, wat je nooit ergens in plakt
+- Hoe je dataveiligheid waarborgt: welke tools EU-hostend zijn (zoals Microsoft Copilot via M365), wat je nooit ergens in plakt
 - Welke risico-categorie jouw AI-gebruik heeft volgens de wet
 - Concrete grenzen voor klantcontact, HR-beslissingen en marketing
 - Hoe je aantoonbaar voldoet aan de verplichting

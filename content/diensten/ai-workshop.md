@@ -1,13 +1,13 @@
 ---
 title: "AI workshop op maat"
-description: "Een AI workshop op basis van een halve dag meekijken bij jouw team. Zo past de workshop bij jouw tools, jouw werk en jouw vragen."
+description: "AI workshop op basis van een halve dag meekijken bij jouw team. We werken met Microsoft Copilot, ChatGPT, Claude of wat jij al gebruikt."
 weight: 1
 sitemap:
   changefreq: monthly
   priority: 0.7
 ---
 
-Een workshop die aansluit bij de tools die jij al gebruikt. Claude, ChatGPT, Gemini, Mistral of een combinatie. We beginnen waar je staat.
+Een workshop die aansluit bij de tools die jij al gebruikt. Microsoft Copilot, ChatGPT, Claude, Gemini of een combinatie. We beginnen waar je staat.
 
 Voor elke workshop kom ik eerst een halve dag meekijken bij jullie team. Niet vanaf de zijlijn, maar om te zien hoe het werk echt gaat. Mensen zien vaak niet meer dat wat ze op de automatische piloot doen, ook automatisch kan. Met dat beeld werk ik een workshop uit die past bij jouw tools, jouw werk en jouw vragen.
 
@@ -17,7 +17,7 @@ Geen algemene presentaties. Een workshop op basis van wat ik bij jullie zie.
 
 ## Voorbeelden van wat we oppakken
 
-- Werken met ChatGPT of Claude voor offertes, e-mails en concepten in jouw eigen toon
+- Microsoft Copilot in Outlook, Word en Teams inzetten voor offertes, e-mails en samenvattingen
 - Gespreksverslagen of notulen automatisch laten uitwerken vanaf een opname
 - Beginnen met een Custom GPT voor een terugkerende taak in je team
 - Documenten of mails laten classificeren, samenvatten of doorzetten

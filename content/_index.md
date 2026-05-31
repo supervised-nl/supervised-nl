@@ -13,7 +13,7 @@ ctaSecondary:
 diensten:
   - number: "01"
     title: "Workshop op maat"
-    body: "Een halve dag meekijken bij jullie team, dan een workshop op basis van wat ik zie. Denk aan offertes opstellen met AI, gespreksverslagen automatiseren of een Custom GPT voor je team."
+    body: "Een halve dag meekijken bij jullie team, dan een workshop op basis van wat ik zie. Microsoft Copilot, ChatGPT of Claude. Denk aan offertes opstellen, gespreksverslagen automatiseren of een Custom GPT voor je team."
     url: "/diensten/ai-workshop/"
   - number: "02"
     title: "EU AI Act training"

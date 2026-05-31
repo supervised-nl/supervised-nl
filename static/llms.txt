@@ -5,7 +5,7 @@ Supervised is een solo AI-consultancy uit Oldenzaal, Nederland. Opgericht en ger
 
 ## Diensten
 
-- **AI workshop op maat** (URL: /diensten/ai-workshop/): workshops op de tools die de klant al gebruikt, zoals Claude, ChatGPT, Gemini of Mistral. Voorbeelden: offertes en e-mails opstellen met AI, gespreksverslagen en notulen automatisch laten uitwerken, een Custom GPT bouwen voor een terugkerende taak, documenten classificeren of samenvatten, veilig werken met AI binnen wettelijke grenzen.
+- **AI workshop op maat** (URL: /diensten/ai-workshop/): workshops op de tools die de klant al gebruikt, zoals Microsoft Copilot (in Outlook, Word, Teams), ChatGPT, Claude of Gemini. Voorbeelden: offertes en e-mails opstellen met Copilot of ChatGPT, gespreksverslagen en notulen automatisch laten uitwerken, een Custom GPT bouwen voor een terugkerende taak, documenten classificeren of samenvatten, veilig werken met AI binnen wettelijke grenzen.
 
 - **EU AI Act basistraining** (URL: /diensten/eu-ai-act-training/): team in een halve dag op het verplichte basisniveau AI-kennis brengen, conform de EU AI Act (verplicht sinds februari 2025). Onderwerpen: wat mag wel en niet in een AI-tool, dataveiligheid en EU-hostende tools, risico-categorie van het AI-gebruik, grenzen voor klantcontact en HR-beslissingen, hoe je aantoonbaar voldoet aan de verplichting.
 
