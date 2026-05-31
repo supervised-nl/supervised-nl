@@ -630,6 +630,11 @@ footer {
   gap: clamp(1rem, 2.5vw, 2.618rem);
   align-items: baseline;
 }
+.diensten-cards > .dienst-card:first-child,
+.home-cards > .home-card:first-child {
+  border-top: none;
+  padding-top: 0;
+}
 .dienst-number,
 .home-card-number {
   font-size: 1.618rem;
@@ -700,6 +705,10 @@ footer {
   border-top: 1px solid var(--rule);
   padding-top: 2.618rem;
   margin-bottom: 2.618rem;
+}
+.blog-list > .blog-item:first-child {
+  border-top: none;
+  padding-top: 0;
 }
 .blog-item .blog-meta {
   display: block;
