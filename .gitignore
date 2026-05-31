@@ -12,3 +12,4 @@ resources/_gen/
 
 # Claude Code
 .claude/
+motion-audits/
