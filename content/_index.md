@@ -53,4 +53,4 @@ closing:
     url: "/contact/"
 ---
 
-Spreker, trainer en bouwer voor MKB-teams. Werkende AI in je proces, geen toekomstverhaal.
+[Spreker](/spreker/), trainer en bouwer voor MKB-teams. Werkende AI in je proces, geen toekomstverhaal.

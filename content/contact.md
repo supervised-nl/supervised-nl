@@ -10,3 +10,5 @@ phone_display: "+31 6 44 83 56 56"
 address: "Rigtersbleek-Zandvoort 10, 7521 BE Enschede"
 kvk: "97664472"
 ---
+
+Ik werk vanuit Enschede door heel Twente en Oost-Nederland. Benieuwd wat ik regionaal doe? Lees meer over [een AI-consultant in Twente](/ai-consultant-twente/).
