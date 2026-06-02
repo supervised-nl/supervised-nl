@@ -23,6 +23,10 @@ diensten:
     title: "Prototype in a Day"
     body: "In één werkdag bouwen we samen een werkend prototype. Een Custom GPT, document-analyse of een proof-of-concept voor één stap in je werk."
     url: "/diensten/prototype-in-a-day/"
+  - number: "04"
+    title: "Spreker & lezingen"
+    body: "Een lezing, keynote of gastcollege over AI in het MKB, de EU AI Act of praktisch werken met Copilot en ChatGPT. Toegespitst op het publiek in de zaal, geen hype."
+    url: "/spreker/"
 werkwijze:
   - number: "01"
     title: "Meekijken op de werkvloer"
