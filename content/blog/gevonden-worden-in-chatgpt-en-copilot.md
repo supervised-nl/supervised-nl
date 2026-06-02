@@ -49,9 +49,19 @@ Een voorbeeld uit eigen huis. Ik heb deze aanpak op mijn eigen site toegepast. B
 
 Vooraan staan op je eigen naam hoort te kunnen. Maar het laat wel zien dat een schoon fundament snel wordt opgepikt. Geen jarenlange linkbuilding, geen advertentiebudget. Gewoon de basis goed neerzetten en de deur openzetten voor de crawlers.
 
+## Pas op voor één misverstand
+
+Gevonden worden op je eigen merknaam is de makkelijke helft. Niemand concurreert om jouw naam. Het echte werk begint als iemand je nog niet kent en vraagt: ken je een goede AI-consultant in de buurt?
+
+Daar ligt de lat hoger. AI noemt lokale bedrijven nog mondjesmaat. Uit onderzoek naar AI-zichtbaarheid van 2026 blijkt dat ChatGPT maar zo'n 1 procent van de lokale bedrijven uit zichzelf aanbeveelt. Een schoon fundament op je eigen site is daarvoor nodig, maar niet genoeg.
+
+Wat de doorslag geeft, is of meerdere onafhankelijke bronnen hetzelfde over je zeggen. Je eigen site, je Google-bedrijfsprofiel, vermeldingen en links van anderen. Bedrijven die op vijf of meer plekken consistent terugkomen, worden volgens datzelfde onderzoek veel vaker door AI genoemd dan bedrijven die alleen op hun eigen site bestaan. AI vertrouwt herhaling tussen bronnen, niet één mooie pagina.
+
+Zie het fundament dus als stap één, niet als de finish. Eerst zorg je dat AI je site goed kan lezen. Daarna zorg je dat je ook elders bestaat.
+
 ## Begin klein, meet het effect
 
-Je hoeft hier geen halfjaarproject van te maken. Pak de FAQ, maak je gegevens consistent, open de deur voor de crawlers. Vraag daarna zelf aan ChatGPT en Copilot wat ze over je bedrijf zeggen. Je ziet binnen weken verschil.
+Je hoeft hier geen halfjaarproject van te maken. Pak de FAQ, maak je gegevens consistent, open de deur voor de crawlers. Claim daarna je Google-bedrijfsprofiel en zorg dat een paar betrouwbare plekken naar je verwijzen. Vraag dan zelf aan ChatGPT en Copilot wat ze over je bedrijf zeggen. Je ziet binnen weken verschil.
 
 Wil je weten waar je nu staat? Doe de [GEO-check](/geo-check/). Voer je domein in en je ziet in een paar seconden of je fundament klopt: laat je de AI-crawlers toe, heb je gestructureerde data, een llms.txt en een sitemap.
 
