@@ -43,7 +43,7 @@ Leg vervolgens **per dienst één heldere pagina** aan. Geen verzamelpagina waar
 
 Controleer ten slotte of je **de AI-bots toelaat**. Dat regel je in een klein tekstbestand op je site. Een ontwikkelaar doet dit in tien minuten.
 
-*Benieuwd waar je nu staat?* Doe de [GEO-check](/geo-check/) en zie in een paar seconden of je fundament klopt.
+Benieuwd waar je nu staat? Doe de [GEO-check](/geo-check/) en zie in een paar seconden of je fundament klopt.
 
 ## Werkt dit echt?
 
