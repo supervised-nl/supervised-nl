@@ -12,14 +12,18 @@ ctaSecondary:
   url: "/contact/"
 diensten:
   - number: "01"
+    title: "Spreker & lezingen"
+    body: "Ik kom spreken op je event, kickoff of teamdag. Geen algemeen AI-verhaal, maar toegepast op het werk van je publiek. Je zaal loopt weg met iets dat maandag al bruikbaar is."
+    url: "/spreker/"
+  - number: "02"
     title: "Workshop op maat"
     body: "Een halve dag meekijken bij jullie team, dan een workshop op basis van wat ik zie. Microsoft Copilot, ChatGPT of Claude. Denk aan offertes opstellen, gespreksverslagen automatiseren of een Custom GPT voor je team."
     url: "/diensten/ai-workshop/"
-  - number: "02"
+  - number: "03"
     title: "EU AI Act training"
     body: "In een halve dag breng je team op het verplichte basisniveau AI-kennis. Wat mag wel, wat mag niet, en hoe je het aantoonbaar maakt."
     url: "/diensten/eu-ai-act-training/"
-  - number: "03"
+  - number: "04"
     title: "Prototype in a Day"
     body: "In één werkdag bouwen we samen een werkend prototype. Een Custom GPT, document-analyse of een proof-of-concept voor één stap in je werk."
     url: "/diensten/prototype-in-a-day/"
@@ -53,4 +57,4 @@ closing:
     url: "/contact/"
 ---
 
-Spreker, trainer en bouwer voor MKB-teams. Werkende AI in je proces, geen toekomstverhaal.
+[Spreker](/spreker/), trainer en bouwer voor MKB-teams. Werkende AI in je proces, geen toekomstverhaal.

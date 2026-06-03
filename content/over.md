@@ -7,7 +7,7 @@ sitemap:
   changefreq: monthly
   priority: 0.8
 ogImage: "img/profile_picture.jpg"
-intro: "Eigenaar van Supervised. Spreker, trainer en bouwer. Ik help MKB-bedrijven om werkprocessen te automatiseren met AI. We beginnen altijd bij het proces, nooit bij de technologie."
+intro: "Eigenaar van Supervised. [Spreker](/spreker/), trainer en bouwer. Ik help MKB-bedrijven om werkprocessen te automatiseren met AI. We beginnen altijd bij het proces, nooit bij de technologie."
 linkedin: "https://www.linkedin.com/in/jeroengijselaar/"
 sections:
   - title: "Hoe ik werk"
