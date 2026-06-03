@@ -43,11 +43,15 @@ Leg vervolgens **per dienst één heldere pagina** aan. Geen verzamelpagina waar
 
 Controleer ten slotte of je **de AI-bots toelaat**. Dat regel je in een klein tekstbestand op je site. Een ontwikkelaar doet dit in tien minuten.
 
+> **Doe de gratis GEO-check.** Voer je domein in en zie in een paar seconden of je technische fundament klopt: laat je de AI-crawlers toe, heb je gestructureerde data, een llms.txt en een sitemap. [Start de check →](/geo-check/)
+
 ## Werkt dit echt?
 
 Een voorbeeld uit eigen huis. Ik heb deze aanpak op mijn eigen site toegepast. Binnen een week stond Supervised op nummer 1 in Google voor de eigen merknaam. Een maand later wisselt de site nog steeds af tussen plek 1 en 2.
 
 Vooraan staan op je eigen naam hoort te kunnen. Maar het laat wel zien dat een schoon fundament snel wordt opgepikt. Geen jarenlange linkbuilding, geen advertentiebudget. Gewoon de basis goed neerzetten en de deur openzetten voor de crawlers.
+
+Eén ding eerlijk erbij: dit is een SEO-resultaat, geen GEO-resultaat. Nummer 1 in Google is klassieke zoekmachine-optimalisatie. Dat het snel ging, laat zien dat het fundament klopt. In AI-assistenten word je niet zo snel opgepikt. Daar duurt het langer, want een AI moet je eerst vinden, vertrouwen en op meerdere plekken bevestigd zien. Reken daar eerder op maanden dan op weken.
 
 ## Pas op voor één misverstand
 
@@ -61,9 +65,7 @@ Zie het fundament dus als stap één, niet als de finish. Eerst zorg je dat AI j
 
 ## Begin klein, meet het effect
 
-Je hoeft hier geen halfjaarproject van te maken. Pak de FAQ, maak je gegevens consistent, open de deur voor de crawlers. Claim daarna je Google-bedrijfsprofiel en zorg dat een paar betrouwbare plekken naar je verwijzen. Vraag dan zelf aan ChatGPT en Copilot wat ze over je bedrijf zeggen. Je ziet binnen weken verschil.
-
-Wil je weten waar je nu staat? Doe de [GEO-check](/geo-check/). Voer je domein in en je ziet in een paar seconden of je fundament klopt: laat je de AI-crawlers toe, heb je gestructureerde data, een llms.txt en een sitemap.
+Je hoeft hier geen halfjaarproject van te maken. Pak de FAQ, maak je gegevens consistent, open de deur voor de crawlers. Claim daarna je Google-bedrijfsprofiel en zorg dat een paar betrouwbare plekken naar je verwijzen. Vraag dan zelf aan ChatGPT en Copilot wat ze over je bedrijf zeggen. Geef het tijd, dan zie je het verschil.
 
 Het is dezelfde les als bij elk AI-project: eerst de basis op orde, dan pas de techniek. Wie dat omdraait, betaalt voor niets.
 
