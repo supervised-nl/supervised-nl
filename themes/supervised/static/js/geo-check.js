@@ -59,11 +59,6 @@
     });
     results.appendChild(list);
 
-    var context = el("div", "geo-context");
-    context.appendChild(el("p", "geo-context-title", "Dit is je technische fundament, niet de finish."));
-    context.appendChild(el("p", null, "Deze score zegt of AI je site goed kan lezen. Genoemd worden vraagt meer: een Google-bedrijfsprofiel, vermeldingen en links van anderen, en overal dezelfde bedrijfsgegevens. AI vertrouwt herhaling tussen bronnen, niet één pagina."));
-    results.appendChild(context);
-
     var cta = el("div", "geo-cta");
     cta.appendChild(el("p", null, "Wil je dit voor jouw bedrijf op orde, of de gaten laten dichten?"));
     var link = el("a", "cta cta-primary", "Neem contact op");

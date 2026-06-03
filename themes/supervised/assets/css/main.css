@@ -888,7 +888,7 @@ footer {
 
 .geo-loading { color: var(--ink-3); }
 
-.geo-message-error p {
+#geo-results .geo-message-error p {
   margin: 0;
   padding: 1rem 1.236rem;
   border: 1px solid var(--accent-soft);
@@ -954,25 +954,6 @@ footer {
   border-top: 1px solid var(--rule);
 }
 .geo-cta p { margin: 0 0 1rem; color: var(--ink-2); }
-
-.geo-context {
-  margin: 0 0 2rem;
-  padding: 1.236rem 1.382rem;
-  border: 1px solid var(--accent-soft);
-  border-radius: var(--radius-md);
-  background: var(--accent-bg);
-}
-.geo-context p {
-  margin: 0;
-  font-size: 0.854rem;
-  line-height: 1.55;
-  color: var(--ink-2);
-}
-.geo-context .geo-context-title {
-  margin-bottom: 0.382rem;
-  font-weight: 500;
-  color: var(--ink-1);
-}
 
 /* LENIS */
 
