@@ -1,0 +1,234 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+
+import { anthropic } from "@/lib/anthropic";
+import { requireRole } from "@/lib/auth";
+import { getResend } from "@/lib/resend";
+import { createServiceClient } from "@/lib/supabase/service";
+
+function buildChallengePrompt(args: {
+  organizationName: string;
+  sector: string | null;
+  weekNumber: number;
+  processes: string | null;
+  toolsUsed: string | null;
+  useCases: string | null;
+  notes: string | null;
+}) {
+  return `Je schrijft een wekelijkse micro-uitdaging voor het team van een Nederlands MKB-bedrijf dat een AI-workshop heeft gevolgd. Doel: de kennis uit de workshop praktisch laten landen in hun werk.
+
+Bedrijf: ${args.organizationName}${args.sector ? ` (sector: ${args.sector})` : ""}
+Weeknummer: ${args.weekNumber}
+
+Workshopcontext:
+- Processen: ${args.processes ?? "onbekend"}
+- Gebruikte tools: ${args.toolsUsed ?? "onbekend"}
+- Use cases: ${args.useCases ?? "onbekend"}
+- Notities: ${args.notes ?? "geen"}
+
+Schrijf een korte, concrete uitdaging die een medewerker in maximaal een uur kan uitvoeren met AI, aansluitend op de workshopcontext. Direct, geen jargon, "je/jouw" aanspreekvorm.
+
+Antwoord uitsluitend met geldige JSON in dit exacte formaat, zonder uitleg ervoor of erna:
+{"title": "...", "description": "...", "expected_outcome": "..."}`;
+}
+
+function parseChallengeJson(text: string) {
+  const match = text.match(/\{[\s\S]*\}/);
+  if (!match) {
+    throw new Error("De uitdaging kon niet gegenereerd worden. Probeer het opnieuw.");
+  }
+
+  const parsed = JSON.parse(match[0]) as Partial<{
+    title: string;
+    description: string;
+    expected_outcome: string;
+  }>;
+
+  if (!parsed.title || !parsed.description) {
+    throw new Error("De uitdaging kon niet gegenereerd worden. Probeer het opnieuw.");
+  }
+
+  return {
+    title: parsed.title,
+    description: parsed.description,
+    expected_outcome: parsed.expected_outcome ?? null,
+  };
+}
+
+export async function generateChallenge(orgId: string) {
+  await requireRole(["super_admin"]);
+  const supabase = createServiceClient();
+
+  const { data: org, error: orgError } = await supabase
+    .from("organizations")
+    .select("name, sector")
+    .eq("id", orgId)
+    .single();
+
+  if (orgError || !org) {
+    throw new Error(orgError?.message ?? "Organisatie niet gevonden.");
+  }
+
+  const { data: context } = await supabase
+    .from("workshop_contexts")
+    .select("*")
+    .eq("organization_id", orgId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const { data: existingChallenges } = await supabase
+    .from("challenges")
+    .select("week_number")
+    .eq("organization_id", orgId)
+    .order("week_number", { ascending: false })
+    .limit(1);
+
+  const weekNumber = (existingChallenges?.[0]?.week_number ?? 0) + 1;
+
+  let generated: { title: string; description: string; expected_outcome: string | null };
+
+  try {
+    const response = await anthropic.messages.create({
+      model: "claude-sonnet-4-6",
+      max_tokens: 300,
+      messages: [
+        {
+          role: "user",
+          content: buildChallengePrompt({
+            organizationName: org.name,
+            sector: org.sector,
+            weekNumber,
+            processes: context?.processes ?? null,
+            toolsUsed: context?.tools_used ?? null,
+            useCases: context?.use_cases ?? null,
+            notes: context?.notes ?? null,
+          }),
+        },
+      ],
+    });
+
+    const block = response.content[0];
+    if (block.type !== "text") {
+      throw new Error("De uitdaging kon niet gegenereerd worden. Probeer het opnieuw.");
+    }
+
+    generated = parseChallengeJson(block.text);
+  } catch {
+    throw new Error("Uitdaging genereren mislukt. Probeer het over een moment opnieuw.");
+  }
+
+  const { error: insertError } = await supabase.from("challenges").insert({
+    organization_id: orgId,
+    workshop_context_id: context?.id ?? null,
+    week_number: weekNumber,
+    title: generated.title,
+    description: generated.description,
+    expected_outcome: generated.expected_outcome,
+    status: "draft",
+  });
+
+  if (insertError) {
+    throw new Error(insertError.message);
+  }
+
+  revalidatePath(`/admin/challenges/${orgId}`);
+}
+
+export async function updateChallenge(challengeId: string, formData: FormData) {
+  await requireRole(["super_admin"]);
+
+  const title = formData.get("title");
+  const description = formData.get("description");
+  const expectedOutcome = formData.get("expectedOutcome");
+
+  if (typeof title !== "string" || !title.trim() || typeof description !== "string" || !description.trim()) {
+    throw new Error("Titel en beschrijving zijn verplicht.");
+  }
+
+  const supabase = createServiceClient();
+  const { data: updated, error } = await supabase
+    .from("challenges")
+    .update({
+      title: title.trim(),
+      description: description.trim(),
+      expected_outcome:
+        typeof expectedOutcome === "string" && expectedOutcome.trim()
+          ? expectedOutcome.trim()
+          : null,
+    })
+    .eq("id", challengeId)
+    .select("organization_id")
+    .single();
+
+  if (error || !updated) {
+    throw new Error("Je wijzigingen zijn niet opgeslagen. Controleer je invoer en probeer opnieuw.");
+  }
+
+  revalidatePath(`/admin/challenges/${updated.organization_id}`);
+}
+
+export async function activateChallenge(challengeId: string) {
+  await requireRole(["super_admin"]);
+  const supabase = createServiceClient();
+
+  const { data: challenge, error: challengeError } = await supabase
+    .from("challenges")
+    .select("id, organization_id, title, description")
+    .eq("id", challengeId)
+    .single();
+
+  if (challengeError || !challenge) {
+    throw new Error("Deze uitdaging bestaat niet meer. Ga terug en probeer een ander.");
+  }
+
+  const { error: completePreviousError } = await supabase
+    .from("challenges")
+    .update({ status: "completed" })
+    .eq("organization_id", challenge.organization_id)
+    .eq("status", "active")
+    .neq("id", challengeId);
+
+  if (completePreviousError) {
+    throw new Error(completePreviousError.message);
+  }
+
+  const { error: activateError } = await supabase
+    .from("challenges")
+    .update({ status: "active", send_at: new Date().toISOString() })
+    .eq("id", challengeId);
+
+  if (activateError) {
+    throw new Error(activateError.message);
+  }
+
+  const { data: members, error: membersError } = await supabase
+    .from("users")
+    .select("email")
+    .eq("organization_id", challenge.organization_id)
+    .eq("role", "member");
+
+  if (membersError) {
+    throw new Error(membersError.message);
+  }
+
+  const recipients = (members ?? [])
+    .map((member) => member.email)
+    .filter((email): email is string => Boolean(email));
+
+  if (recipients.length > 0) {
+    try {
+      await getResend().emails.send({
+        from: "Supervised Coach <coach@supervised.nl>",
+        to: recipients,
+        subject: `Nieuwe uitdaging: ${challenge.title}`,
+        text: `Er staat een nieuwe uitdaging voor je klaar.\n\n${challenge.title}\n\n${challenge.description}\n\nGa naar ${process.env.NEXT_PUBLIC_APP_URL}/dashboard/member om aan de slag te gaan.`,
+      });
+    } catch {
+      throw new Error("E-mail kon niet verzonden worden. Controleer of het e-mailadres klopt.");
+    }
+  }
+
+  revalidatePath(`/admin/challenges/${challenge.organization_id}`);
+}
