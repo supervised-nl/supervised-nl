@@ -11,15 +11,25 @@ function readOrganizationFields(formData: FormData) {
   const name = formData.get("name");
   const sector = formData.get("sector");
   const size = formData.get("size");
+  const sendDay = formData.get("challenge_send_day");
+  const sendTime = formData.get("challenge_send_time");
 
   if (typeof name !== "string" || !name.trim()) {
     throw new Error("Naam is verplicht.");
   }
 
+  const parsedDay =
+    typeof sendDay === "string" && sendDay !== "" && sendDay !== "now"
+      ? parseInt(sendDay, 10)
+      : null;
+
   return {
     name: name.trim(),
     sector: typeof sector === "string" && sector.trim() ? sector.trim() : null,
     size: typeof size === "string" && size ? (size as OrganizationSize) : null,
+    challenge_send_day: Number.isNaN(parsedDay ?? NaN) ? null : parsedDay,
+    challenge_send_time:
+      typeof sendTime === "string" && /^\d{2}:\d{2}$/.test(sendTime) ? sendTime : "10:00",
   };
 }
 

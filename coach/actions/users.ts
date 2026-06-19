@@ -113,6 +113,79 @@ export async function updateUser(userId: string, formData: FormData) {
   redirect(`/admin/organizations/${organizationId}`);
 }
 
+export async function inviteUser(orgId: string, formData: FormData) {
+  await requireRole(["super_admin"]);
+
+  const name = formData.get("name");
+  const email = formData.get("email");
+  const role = formData.get("role");
+
+  if (
+    typeof name !== "string" ||
+    !name.trim() ||
+    typeof email !== "string" ||
+    !email.trim() ||
+    (role !== "admin" && role !== "member")
+  ) {
+    throw new Error("Vul naam, e-mailadres en rol in.");
+  }
+
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://coach.supervised.nl";
+  const supabase = createServiceClient();
+
+  const { data: org } = await supabase
+    .from("organizations")
+    .select("name")
+    .eq("id", orgId)
+    .single();
+
+  const { data: created, error: createError } = await supabase.auth.admin.createUser({
+    email: email.trim(),
+    email_confirm: true,
+  });
+
+  if (createError || !created.user) {
+    throw new Error(createError?.message ?? "Gebruiker aanmaken is mislukt.");
+  }
+
+  const { error: insertError } = await supabase.from("users").insert({
+    id: created.user.id,
+    organization_id: orgId,
+    role: role as UserRole,
+    name: name.trim(),
+    email: email.trim(),
+  });
+
+  if (insertError) {
+    await supabase.auth.admin.deleteUser(created.user.id);
+    throw new Error(insertError.message);
+  }
+
+  const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
+    type: "recovery",
+    email: email.trim(),
+    options: { redirectTo: `${appUrl}/auth/callback?next=/reset-password` },
+  });
+
+  if (linkError || !linkData.properties?.action_link) {
+    throw new Error("Uitnodigingslink kon niet worden aangemaakt.");
+  }
+
+  const { getResend } = await import("@/lib/resend");
+  try {
+    await getResend().emails.send({
+      from: "Supervised Coach <coach@supervised.nl>",
+      to: email.trim(),
+      subject: `Je bent uitgenodigd voor Supervised Coach`,
+      text: `Hoi ${name.trim()},\n\nJe bent uitgenodigd voor Supervised Coach van ${org?.name ?? "je organisatie"}.\n\nKlik op de link hieronder om je wachtwoord in te stellen en aan de slag te gaan:\n\n${linkData.properties.action_link}\n\nDe link is 24 uur geldig.\n\nGroeten,\nSupervised Coach`,
+    });
+  } catch {
+    throw new Error("Uitnodigingsmail kon niet worden verzonden.");
+  }
+
+  revalidatePath(`/admin/organizations/${orgId}`);
+}
+
 export async function deleteUser(userId: string, organizationId: string) {
   await requireRole(["super_admin"]);
 

@@ -2,14 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { deleteOrganization, updateOrganization } from "@/actions/organizations";
-import { deleteUser } from "@/actions/users";
-import { upsertWorkshopContext } from "@/actions/workshop-context";
 import { OrganizationForm } from "@/components/admin/organization-form";
-import { WorkshopContextForm } from "@/components/admin/workshop-context-form";
+import { BackLink } from "@/components/back-link";
 import { ConfirmButton } from "@/components/confirm-button";
-import { buttonVariants } from "@/components/ui/button";
+import { PageWrapper } from "@/components/page-wrapper";
 import { requireRole } from "@/lib/auth";
 import { createServiceClient } from "@/lib/supabase/service";
+import { eyebrowClass } from "@/lib/ui";
 
 export default async function OrganizationDetailPage({
   params,
@@ -24,127 +23,84 @@ export default async function OrganizationDetailPage({
   const [
     { data: org, error: orgError },
     { data: users, error: usersError },
-    { data: workshopContext, error: contextError },
   ] = await Promise.all([
     supabase.from("organizations").select("*").eq("id", orgId).maybeSingle(),
-    supabase.from("users").select("*").eq("organization_id", orgId).order("created_at", { ascending: true }),
-    supabase
-      .from("workshop_contexts")
-      .select("*")
-      .eq("organization_id", orgId)
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle(),
+    supabase.from("users").select("id, role").eq("organization_id", orgId),
   ]);
 
-  if (orgError) {
-    throw new Error(orgError.message);
-  }
+  if (orgError) throw new Error(orgError.message);
+  if (!org) notFound();
+  if (usersError) throw new Error(usersError.message);
 
-  if (!org) {
-    notFound();
-  }
-
-  if (usersError) {
-    throw new Error(usersError.message);
-  }
-
-  if (contextError) {
-    throw new Error(contextError.message);
-  }
+  const memberCount = users.filter((u) => u.role === "member").length;
 
   return (
-    <main className="min-h-screen bg-supervised-bg px-6 pt-(--spacing-header) pb-12">
-      <div className="mx-auto flex max-w-2xl flex-col gap-10">
-        <Link href="/admin" className="link-underline text-supervised-sm text-supervised-ink-3">
-          ← Terug naar organisaties
-        </Link>
+    <PageWrapper>
+      <BackLink href="/admin">Terug naar organisaties</BackLink>
 
-        <section className="flex flex-col gap-4">
-          <h1 className="text-supervised-lg font-light text-supervised-ink-1">{org.name}</h1>
-          <OrganizationForm
-            action={updateOrganization.bind(null, orgId)}
-            defaultValues={org}
-            submitLabel="Wijzigingen opslaan"
-          />
-          <form action={deleteOrganization.bind(null, orgId)}>
-            <ConfirmButton
-              type="submit"
-              variant="destructive"
-              confirmMessage={`Organisatie "${org.name}" verwijderen? Gebruikers van deze organisatie blijven bestaan maar verliezen de koppeling.`}
-            >
-              Organisatie verwijderen
-            </ConfirmButton>
-          </form>
-        </section>
-
-        <section className="flex flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-supervised-md font-light text-supervised-ink-1">Gebruikers</h2>
-            <Link href={`/admin/users/new?orgId=${orgId}`} className={buttonVariants({ size: "sm" })}>
-              Gebruiker toevoegen
-            </Link>
-          </div>
-          <div className="flex flex-col gap-2">
-            {users.length === 0 ? (
-              <p className="text-supervised-sm text-supervised-ink-3">Nog geen gebruikers in deze organisatie.</p>
-            ) : (
-              users.map((user) => (
-                <div
-                  key={user.id}
-                  className="flex flex-col gap-3 rounded-supervised-md border border-supervised-rule bg-supervised-surface p-3 sm:flex-row sm:items-center sm:justify-between"
-                >
-                  <div>
-                    <p className="text-supervised-sm font-medium text-supervised-ink-1">
-                      {user.name ?? user.email}
-                    </p>
-                    <p className="text-supervised-xs text-supervised-ink-3">{user.email}</p>
-                  </div>
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <span className="text-supervised-xs text-supervised-ink-3">{user.role}</span>
-                    <Link
-                      href={`/admin/users/${user.id}/edit`}
-                      className={buttonVariants({ variant: "outline", size: "sm" })}
-                    >
-                      Wijzigen
-                    </Link>
-                    <form action={deleteUser.bind(null, user.id, orgId)}>
-                      <ConfirmButton
-                        type="submit"
-                        variant="destructive"
-                        size="sm"
-                        confirmMessage={`Gebruiker "${user.name ?? user.email}" verwijderen? Dit kan niet ongedaan worden gemaakt.`}
-                      >
-                        Verwijderen
-                      </ConfirmButton>
-                    </form>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </section>
-
-        <section className="flex flex-col gap-4">
-          <h2 className="text-supervised-md font-light text-supervised-ink-1">Workshopcontext</h2>
-          <WorkshopContextForm
-            action={upsertWorkshopContext.bind(null, orgId)}
-            defaultValues={workshopContext ?? undefined}
-          />
-        </section>
-
-        <div className="flex flex-wrap items-start gap-3 self-start">
-          <Link href={`/dashboard/admin?orgId=${orgId}`} className={buttonVariants({ variant: "outline" })}>
-            Bekijk teamoverzicht
+      <div className="flex flex-col gap-2">
+        <h1 className="text-supervised-xl font-light text-supervised-ink-1">{org.name}</h1>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          {org.sector ? <span className={eyebrowClass}>{org.sector}</span> : null}
+          {org.size ? <span className={eyebrowClass}>{org.size}</span> : null}
+          <span className="text-supervised-xs text-supervised-ink-4">{memberCount} leden</span>
+          <span className="text-supervised-ink-4 text-supervised-xs">·</span>
+          <Link href={`/dashboard/admin?orgId=${orgId}`} className="text-supervised-xs text-supervised-ink-4 hover:text-supervised-ink-2 transition-colors">
+            Teamoverzicht
           </Link>
-          <Link href={`/dashboard/member?orgId=${orgId}`} className={buttonVariants({ variant: "outline" })}>
-            Bekijk teamdashboard
-          </Link>
-          <Link href={`/admin/challenges/${orgId}`} className={buttonVariants({ variant: "outline" })}>
-            Uitdagingen beheren
+          <Link href={`/dashboard/member?orgId=${orgId}`} className="text-supervised-xs text-supervised-ink-4 hover:text-supervised-ink-2 transition-colors">
+            Teamdashboard
           </Link>
         </div>
       </div>
-    </main>
+
+      <div className="flex flex-col">
+        {[
+          { href: `/admin/challenges/${orgId}`, label: "Uitdagingen", meta: null },
+          { href: `/admin/organizations/${orgId}/gebruikers`, label: "Gebruikers", meta: `${users.length}` },
+          { href: `/admin/organizations/${orgId}/workshop`, label: "Workshop", meta: "Context voor de vraagbaak" },
+        ].map(({ href, label, meta }) => (
+          <Link
+            key={href}
+            href={href}
+            className="flex items-center justify-between gap-4 py-4 border-b border-supervised-rule last:border-0 group"
+          >
+            <div className="flex items-baseline gap-3">
+              <p className="text-supervised-sm font-medium text-supervised-ink-1 group-hover:text-supervised-ink-2 transition-colors">
+                {label}
+              </p>
+              {meta ? <span className="text-supervised-xs text-supervised-ink-4">{meta}</span> : null}
+            </div>
+            <span className="text-supervised-ink-4 group-hover:text-supervised-ink-2 transition-colors shrink-0">→</span>
+          </Link>
+        ))}
+      </div>
+
+      <div className="border-t border-supervised-rule" />
+
+      <OrganizationForm
+        action={updateOrganization.bind(null, orgId)}
+        defaultValues={org}
+        submitLabel="Wijzigingen opslaan"
+      />
+
+      <div className="border-t border-supervised-rule" />
+
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <p className="text-supervised-xs text-supervised-ink-4">
+          Verwijderen ontkoppelt gebruikers maar verwijdert ze niet.
+        </p>
+        <form action={deleteOrganization.bind(null, orgId)}>
+          <ConfirmButton
+            type="submit"
+            variant="destructive"
+            size="sm"
+            confirmMessage={`Organisatie "${org.name}" verwijderen? Gebruikers van deze organisatie blijven bestaan maar verliezen de koppeling.`}
+          >
+            Verwijderen
+          </ConfirmButton>
+        </form>
+      </div>
+    </PageWrapper>
   );
 }

@@ -169,6 +169,25 @@ export async function updateChallenge(challengeId: string, formData: FormData) {
   revalidatePath(`/admin/challenges/${updated.organization_id}`);
 }
 
+function computeNextSendAt(sendDay: number, sendTime: string): Date {
+  const [hours, minutes] = sendTime.split(":").map(Number);
+  const now = new Date();
+  const target = new Date(now);
+
+  const currentDay = target.getDay();
+  let daysUntil = (sendDay - currentDay + 7) % 7;
+
+  if (daysUntil === 0) {
+    target.setHours(hours, minutes, 0, 0);
+    if (target > now) return target;
+    daysUntil = 7;
+  }
+
+  target.setDate(target.getDate() + daysUntil);
+  target.setHours(hours, minutes, 0, 0);
+  return target;
+}
+
 export async function activateChallenge(challengeId: string) {
   await requireRole(["super_admin"]);
   const supabase = createServiceClient();
@@ -183,6 +202,18 @@ export async function activateChallenge(challengeId: string) {
     throw new Error("Deze uitdaging bestaat niet meer. Ga terug en probeer een ander.");
   }
 
+  const { data: org } = await supabase
+    .from("organizations")
+    .select("challenge_send_day, challenge_send_time")
+    .eq("id", challenge.organization_id)
+    .single();
+
+  const sendDay = org?.challenge_send_day;
+  const sendTime = org?.challenge_send_time ?? "10:00";
+
+  const sendAt = sendDay != null ? computeNextSendAt(sendDay, sendTime) : new Date();
+  const sendNow = sendAt <= new Date();
+
   const { error: completePreviousError } = await supabase
     .from("challenges")
     .update({ status: "completed" })
@@ -196,39 +227,58 @@ export async function activateChallenge(challengeId: string) {
 
   const { error: activateError } = await supabase
     .from("challenges")
-    .update({ status: "active", send_at: new Date().toISOString() })
+    .update({ status: "active", send_at: sendAt.toISOString(), emails_sent: sendNow })
     .eq("id", challengeId);
 
   if (activateError) {
     throw new Error(activateError.message);
   }
 
-  const { data: members, error: membersError } = await supabase
-    .from("users")
-    .select("email")
-    .eq("organization_id", challenge.organization_id)
-    .eq("role", "member");
+  if (sendNow) {
+    const { data: members, error: membersError } = await supabase
+      .from("users")
+      .select("email, name")
+      .eq("organization_id", challenge.organization_id)
+      .eq("role", "member");
 
-  if (membersError) {
-    throw new Error(membersError.message);
-  }
+    if (membersError) {
+      throw new Error(membersError.message);
+    }
 
-  const recipients = (members ?? [])
-    .map((member) => member.email)
-    .filter((email): email is string => Boolean(email));
-
-  if (recipients.length > 0) {
-    try {
-      await getResend().emails.send({
-        from: "Supervised Coach <coach@supervised.nl>",
-        to: recipients,
-        subject: `Nieuwe uitdaging: ${challenge.title}`,
-        text: `Er staat een nieuwe uitdaging voor je klaar.\n\n${challenge.title}\n\n${challenge.description}\n\nGa naar ${process.env.NEXT_PUBLIC_APP_URL}/dashboard/member om aan de slag te gaan.`,
-      });
-    } catch {
-      throw new Error("E-mail kon niet verzonden worden. Controleer of het e-mailadres klopt.");
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://coach.supervised.nl";
+    for (const member of (members ?? [])) {
+      if (!member.email) continue;
+      try {
+        await getResend().emails.send({
+          from: "Supervised Coach <coach@supervised.nl>",
+          to: member.email,
+          subject: `Nieuwe uitdaging: ${challenge.title}`,
+          text: `Hoi${member.name ? ` ${member.name.split(" ")[0]}` : ""},\n\nEr staat een nieuwe uitdaging voor je klaar.\n\n${challenge.title}\n\n${challenge.description}\n\nGa naar ${appUrl}/dashboard/member om aan de slag te gaan.\n\nGroeten,\nSupervised Coach`,
+        });
+      } catch {
+        throw new Error("E-mail kon niet verzonden worden. Controleer of het e-mailadres klopt.");
+      }
     }
   }
 
   revalidatePath(`/admin/challenges/${challenge.organization_id}`);
+}
+
+export async function deleteChallenge(challengeId: string) {
+  await requireRole(["super_admin"]);
+  const supabase = createServiceClient();
+
+  const { data, error } = await supabase
+    .from("challenges")
+    .delete()
+    .eq("id", challengeId)
+    .eq("status", "draft")
+    .select("organization_id")
+    .single();
+
+  if (error || !data) {
+    throw new Error("Uitdaging kon niet worden verwijderd. Alleen concepten kunnen worden verwijderd.");
+  }
+
+  revalidatePath(`/admin/challenges/${data.organization_id}`);
 }

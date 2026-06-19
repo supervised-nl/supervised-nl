@@ -15,6 +15,8 @@ export type Database = {
           name: string;
           sector: string | null;
           size: OrganizationSize | null;
+          challenge_send_day: number | null;
+          challenge_send_time: string | null;
           created_at: string;
         };
         Insert: {
@@ -22,6 +24,8 @@ export type Database = {
           name: string;
           sector?: string | null;
           size?: OrganizationSize | null;
+          challenge_send_day?: number | null;
+          challenge_send_time?: string | null;
           created_at?: string;
         };
         Update: {
@@ -29,6 +33,8 @@ export type Database = {
           name?: string;
           sector?: string | null;
           size?: OrganizationSize | null;
+          challenge_send_day?: number | null;
+          challenge_send_time?: string | null;
           created_at?: string;
         };
         Relationships: [];
@@ -107,6 +113,7 @@ export type Database = {
           expected_outcome: string | null;
           status: ChallengeStatus;
           send_at: string | null;
+          emails_sent: boolean;
           created_at: string;
         };
         Insert: {
@@ -119,6 +126,7 @@ export type Database = {
           expected_outcome?: string | null;
           status?: ChallengeStatus;
           send_at?: string | null;
+          emails_sent?: boolean;
           created_at?: string;
         };
         Update: {
@@ -131,6 +139,7 @@ export type Database = {
           expected_outcome?: string | null;
           status?: ChallengeStatus;
           send_at?: string | null;
+          emails_sent?: boolean;
           created_at?: string;
         };
         Relationships: [];

@@ -8,7 +8,10 @@ export function ChallengeCard({ challenge }: { challenge: Challenge }) {
       <h2 className="text-supervised-md font-medium text-supervised-ink-1">{challenge.title}</h2>
       <p className="text-supervised-ink-2">{challenge.description}</p>
       {challenge.expected_outcome ? (
-        <p className="text-supervised-sm text-supervised-ink-4">Verwacht resultaat: {challenge.expected_outcome}</p>
+        <div className="flex flex-col gap-1 border-t border-supervised-rule pt-3">
+          <span className={eyebrowClass}>Verwacht resultaat</span>
+          <p className="text-supervised-sm text-supervised-ink-3">{challenge.expected_outcome}</p>
+        </div>
       ) : null}
     </div>
   );

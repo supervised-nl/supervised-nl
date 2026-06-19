@@ -5,7 +5,7 @@ import { roleHome } from "@/lib/role-home";
 import { createClient } from "@/lib/supabase/server";
 import type { User, UserRole } from "@/lib/types";
 
-const getAuthenticatedUser = cache(async (): Promise<User | null> => {
+export const getUser = cache(async (): Promise<User | null> => {
   const supabase = await createClient();
   const { data: auth } = await supabase.auth.getUser();
 
@@ -23,7 +23,7 @@ const getAuthenticatedUser = cache(async (): Promise<User | null> => {
 });
 
 export async function requireRole(allowedRoles: UserRole[]): Promise<User> {
-  const user = await getAuthenticatedUser();
+  const user = await getUser();
 
   if (!user || !allowedRoles.includes(user.role)) {
     redirect(user ? roleHome(user.role) : "/login");

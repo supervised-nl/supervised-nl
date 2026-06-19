@@ -6,6 +6,7 @@ import { CompletionForm } from "@/components/completion-form";
 import { Button } from "@/components/ui/button";
 import { eyebrowClass } from "@/lib/ui";
 
+
 interface Props {
   completion: {
     id: string;
@@ -41,7 +42,7 @@ export function CompletionView({ completion, updateAction }: Props) {
             sharedResult: completion.shared_result,
           }}
         />
-        {error ? <p className="text-supervised-sm text-red-600">{error}</p> : null}
+        {error ? <p className="text-supervised-sm text-destructive">{error}</p> : null}
         <Button variant="outline" type="button" onClick={() => setEditing(false)}>
           Annuleren
         </Button>
@@ -50,23 +51,36 @@ export function CompletionView({ completion, updateAction }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-supervised-md border border-supervised-rule bg-supervised-surface p-6">
+    <div className="flex flex-col gap-4 rounded-supervised-md border border-supervised-rule bg-supervised-surface p-6">
       <div className="flex items-center justify-between">
         <span className={eyebrowClass}>Uitdaging afgerond</span>
         <Button variant="outline" size="sm" type="button" onClick={() => setEditing(true)}>
           Wijzigen
         </Button>
       </div>
-      <p className="font-medium text-supervised-ink-1">
-        {completion.time_saved_minutes !== null
-          ? `${completion.time_saved_minutes} minuten bespaard`
-          : "Tijdsbesparing niet ingevuld"}
-      </p>
+      <div className="flex flex-col gap-0.5">
+        <span className={eyebrowClass}>Tijdsbesparing</span>
+        <p className="font-medium text-supervised-ink-1">
+          {completion.time_saved_minutes !== null
+            ? `${completion.time_saved_minutes} minuten`
+            : "Niet ingevuld"}
+        </p>
+      </div>
       {completion.shared_prompt ? (
-        <p className="text-supervised-sm text-supervised-ink-3">Prompt: {completion.shared_prompt}</p>
+        <div className="flex flex-col gap-0.5">
+          <span className={eyebrowClass}>Prompt</span>
+          <p className="text-supervised-sm text-supervised-ink-3 line-clamp-4">
+            {completion.shared_prompt}
+          </p>
+        </div>
       ) : null}
       {completion.shared_result ? (
-        <p className="text-supervised-sm text-supervised-ink-3">Resultaat: {completion.shared_result}</p>
+        <div className="flex flex-col gap-0.5">
+          <span className={eyebrowClass}>Resultaat</span>
+          <p className="text-supervised-sm text-supervised-ink-3 line-clamp-4">
+            {completion.shared_result}
+          </p>
+        </div>
       ) : null}
     </div>
   );

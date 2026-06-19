@@ -6,10 +6,18 @@ type Block =
   | { type: "p"; lines: string[] };
 
 function renderInline(line: string) {
-  const parts = line.split(/(\*\*[^*]+\*\*)/g).filter(Boolean);
+  const parts = line.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g).filter(Boolean);
   return parts.map((part, index) => {
     if (part.startsWith("**") && part.endsWith("**")) {
       return <strong key={index}>{part.slice(2, -2)}</strong>;
+    }
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
+      return (
+        <a key={index} href={linkMatch[2]} className="link-underline text-supervised-ink-2">
+          {linkMatch[1]}
+        </a>
+      );
     }
     return <Fragment key={index}>{part}</Fragment>;
   });

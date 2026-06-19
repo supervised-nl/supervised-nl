@@ -14,13 +14,24 @@ import type { Organization, OrganizationSize } from "@/lib/types";
 
 const SIZE_OPTIONS: OrganizationSize[] = ["1-5", "5-15", "15-50", "50+"];
 
+const DAY_OPTIONS = [
+  { value: "now", label: "Meteen bij activering" },
+  { value: "1", label: "Maandag" },
+  { value: "2", label: "Dinsdag" },
+  { value: "3", label: "Woensdag" },
+  { value: "4", label: "Donderdag" },
+  { value: "5", label: "Vrijdag" },
+  { value: "6", label: "Zaterdag" },
+  { value: "0", label: "Zondag" },
+];
+
 export function OrganizationForm({
   action,
   defaultValues,
   submitLabel,
 }: {
   action: (formData: FormData) => void;
-  defaultValues?: Pick<Organization, "name" | "sector" | "size">;
+  defaultValues?: Pick<Organization, "name" | "sector" | "size" | "challenge_send_day" | "challenge_send_time">;
   submitLabel: string;
 }) {
   return (
@@ -47,6 +58,40 @@ export function OrganizationForm({
             ))}
           </SelectContent>
         </Select>
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="challenge_send_day">Uitdaging versturen op</Label>
+        <Select
+          name="challenge_send_day"
+          defaultValue={
+            defaultValues?.challenge_send_day != null
+              ? String(defaultValues.challenge_send_day)
+              : "1"
+          }
+        >
+          <SelectTrigger id="challenge_send_day" className="w-full">
+            <SelectValue placeholder="Kies een dag" />
+          </SelectTrigger>
+          <SelectContent>
+            {DAY_OPTIONS.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="challenge_send_time">Tijdstip</Label>
+        <Input
+          id="challenge_send_time"
+          name="challenge_send_time"
+          type="text"
+          inputMode="numeric"
+          pattern="[0-2][0-9]:[0-5][0-9]"
+          placeholder="10:00"
+          defaultValue={defaultValues?.challenge_send_time ?? "10:00"}
+        />
       </div>
       <Button type="submit">{submitLabel}</Button>
     </form>

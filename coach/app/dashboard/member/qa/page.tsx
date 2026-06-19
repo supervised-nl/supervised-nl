@@ -1,10 +1,8 @@
-import Link from "next/link";
-
 import { askQuestion, clearQaHistory } from "@/actions/qa";
 import { ConfirmButton } from "@/components/confirm-button";
 import { MarkdownAnswer } from "@/components/markdown-answer";
+import { PageWrapper } from "@/components/page-wrapper";
 import { QaInput } from "@/components/qa-input";
-import { buttonVariants } from "@/components/ui/button";
 import { requireRole } from "@/lib/auth";
 import { eyebrowClass } from "@/lib/ui";
 import { createClient } from "@/lib/supabase/server";
@@ -30,30 +28,38 @@ export default async function QaPage() {
   ]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center gap-8 bg-supervised-bg px-6 pt-(--spacing-header) pb-12">
-      <div className="flex w-full max-w-xl flex-col gap-8">
-        <h1 className="text-supervised-xl font-light text-supervised-ink-1">Vraagbaak</h1>
-
-        <Link href="/dashboard/member" className={buttonVariants({ variant: "outline", className: "self-start" })}>
-          Terug naar dashboard
-        </Link>
+    <PageWrapper>
+        <div className="flex flex-col gap-2">
+          <h1 className="text-supervised-xl font-light text-supervised-ink-1">Vraagbaak</h1>
+          <p className="text-supervised-sm text-supervised-ink-3">
+            Stel vragen over AI in jouw werk. Antwoorden zijn gebaseerd op jullie workshop. Vragen die daar buiten vallen beantwoord ik niet — voor nieuwe onderwerpen is een nieuwe workshop nodig.
+          </p>
+        </div>
 
         {context ? (
-          <div className="flex flex-col gap-1 rounded-supervised-md border border-supervised-rule bg-supervised-surface p-4">
-            <span className={eyebrowClass}>Jouw workshop</span>
-            <p className="text-supervised-sm text-supervised-ink-1">{context.title}</p>
+          <div className="flex flex-col gap-3 rounded-supervised-md border border-supervised-rule bg-supervised-surface p-4">
+            <div className="flex flex-col gap-0.5">
+              <span className={eyebrowClass}>Workshopcontext</span>
+              <p className="text-supervised-sm font-medium text-supervised-ink-1">{context.title}</p>
+            </div>
             {context.tools_used ? (
-              <p className="text-supervised-sm text-supervised-ink-3">Tools: {context.tools_used}</p>
+              <div className="flex flex-col gap-0.5">
+                <span className={eyebrowClass}>Tools</span>
+                <p className="text-supervised-sm text-supervised-ink-3">{context.tools_used}</p>
+              </div>
             ) : null}
             {context.use_cases ? (
-              <p className="text-supervised-sm text-supervised-ink-3">Use cases: {context.use_cases}</p>
+              <div className="flex flex-col gap-0.5">
+                <span className={eyebrowClass}>Use cases</span>
+                <p className="text-supervised-sm text-supervised-ink-3">{context.use_cases}</p>
+              </div>
             ) : null}
           </div>
         ) : null}
 
         <QaInput action={askQuestion} />
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-supervised-md font-light text-supervised-ink-1">Jouw vragen</h2>
             {threads && threads.length > 0 ? (
@@ -70,11 +76,11 @@ export default async function QaPage() {
             ) : null}
           </div>
           {threads && threads.length > 0 ? (
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col">
               {threads.map((thread) => (
                 <li
                   key={thread.id}
-                  className="flex flex-col gap-2 rounded-supervised-md border border-supervised-rule bg-supervised-surface p-4"
+                  className="flex flex-col gap-2 border-b border-supervised-rule py-4 last:border-0"
                 >
                   <p className="text-supervised-sm font-medium text-supervised-ink-1">{thread.question}</p>
                   {thread.answer ? <MarkdownAnswer text={thread.answer} /> : null}
@@ -85,7 +91,6 @@ export default async function QaPage() {
             <p className="text-supervised-ink-3">Je hebt nog geen vragen gesteld.</p>
           )}
         </div>
-      </div>
-    </main>
+    </PageWrapper>
   );
 }
