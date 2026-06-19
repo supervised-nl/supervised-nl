@@ -9,14 +9,19 @@ export async function GET(request: Request) {
 
   const supabase = createServiceClient();
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://coach.supervised.nl";
-  const now = new Date().toISOString();
+
+  // Dagelijkse cron (Vercel Hobby): verstuur alles wat vandaag of eerder gepland
+  // staat, ongeacht het per-org ingestelde uur. Anders zou een challenge met een
+  // kloktijd later dan de cron pas de dag erna verstuurd worden.
+  const dueBefore = new Date();
+  dueBefore.setHours(23, 59, 59, 999);
 
   const { data: challenges, error } = await supabase
     .from("challenges")
     .select("id, organization_id, title, description")
     .eq("status", "active")
     .eq("emails_sent", false)
-    .lte("send_at", now);
+    .lte("send_at", dueBefore.toISOString());
 
   if (error) {
     console.error("challenge-send cron: ophalen mislukt", error.message);
