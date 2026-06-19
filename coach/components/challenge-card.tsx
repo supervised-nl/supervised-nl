@@ -13,6 +13,9 @@ export function ChallengeCard({ challenge }: { challenge: Challenge }) {
           <p className="text-supervised-sm text-supervised-ink-3">{challenge.expected_outcome}</p>
         </div>
       ) : null}
+      <p className="text-supervised-xs text-supervised-ink-4">
+        Met AI opgesteld, gecontroleerd door Supervised.
+      </p>
     </div>
   );
 }

@@ -34,6 +34,9 @@ export default async function QaPage() {
           <p className="text-supervised-sm text-supervised-ink-3">
             Stel vragen over AI in jouw werk. Antwoorden zijn gebaseerd op jullie workshop. Vragen die daar buiten vallen beantwoord ik niet — voor nieuwe onderwerpen is een nieuwe workshop nodig.
           </p>
+          <p className="text-supervised-xs text-supervised-ink-4">
+            Antwoorden worden door AI gegenereerd en kunnen fouten bevatten.
+          </p>
         </div>
 
         {context ? (

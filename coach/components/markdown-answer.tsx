@@ -89,6 +89,9 @@ export function MarkdownAnswer({ text }: { text: string }) {
   return (
     <div className="flex flex-col gap-2 text-supervised-sm text-supervised-ink-3">
       {blocks.map((block, index) => renderBlock(block, index))}
+      <p className="text-supervised-xs text-supervised-ink-4">
+        Door AI gegenereerd. Controleer belangrijke informatie zelf.
+      </p>
     </div>
   );
 }
