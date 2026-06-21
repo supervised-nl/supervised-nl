@@ -43,10 +43,19 @@ export async function GET(request: Request) {
 
     const { data: completions } = await supabase
       .from("challenge_completions")
-      .select("user_id")
+      .select("user_id, time_saved_minutes")
       .eq("challenge_id", challenge.id);
 
     const completedUserIds = new Set((completions ?? []).map((c) => c.user_id));
+    const totalMembers = (allMembers ?? []).length;
+    const completedCount = completedUserIds.size;
+    const completedPct = totalMembers > 0 ? Math.round((completedCount / totalMembers) * 100) : 0;
+    const totalTimeSaved = (completions ?? []).reduce((sum, c) => sum + (c.time_saved_minutes ?? 0), 0);
+
+    const socialProof =
+      completedCount > 0
+        ? `${completedPct}% van je team heeft de uitdaging al gedaan${totalTimeSaved > 0 ? ` en samen ${totalTimeSaved} minuten bespaard` : ""}. Doe ook mee.`
+        : null;
 
     const recipients = (allMembers ?? []).filter(
       (m) => m.email && !completedUserIds.has(m.id),
@@ -58,7 +67,7 @@ export async function GET(request: Request) {
           from: "Supervised Coach <coach@supervised.nl>",
           to: member.email!,
           subject: `Nog niet gedaan: ${challenge.title}`,
-          text: `Hoi${member.name ? ` ${member.name.split(" ")[0]}` : ""},\n\nJe hebt de uitdaging van deze week nog niet afgerond:\n\n${challenge.title}\n\n${challenge.description}\n\nHet kost maar een paar minuten. Ga naar ${appUrl}/dashboard/member om te beginnen.\n\nGroeten,\nSupervised Coach`,
+          text: `Hoi${member.name ? ` ${member.name.split(" ")[0]}` : ""},\n\nJe hebt de uitdaging van deze week nog niet afgerond:\n\n${challenge.title}\n\n${challenge.description}\n\n${socialProof ? `${socialProof}\n\n` : ""}Het kost maar een paar minuten. Ga naar ${appUrl}/dashboard/member om te beginnen.\n\nGroeten,\nSupervised Coach`,
         });
         totalSent++;
       } catch (err) {

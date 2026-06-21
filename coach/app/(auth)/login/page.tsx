@@ -5,7 +5,7 @@ import { LoginForm } from "@/app/(auth)/login/login-form";
 import { LogoMark } from "@/components/logo-mark";
 
 export const metadata: Metadata = {
-  title: "Inloggen — Supervised Coach",
+  title: "Inloggen | Supervised Coach",
 };
 
 export default async function LoginPage({

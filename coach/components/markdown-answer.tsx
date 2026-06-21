@@ -83,15 +83,17 @@ function renderBlock(block: Block, index: number) {
   );
 }
 
-export function MarkdownAnswer({ text }: { text: string }) {
+export function MarkdownAnswer({ text, showDisclaimer = true }: { text: string; showDisclaimer?: boolean }) {
   const blocks = parseBlocks(text);
 
   return (
     <div className="flex flex-col gap-2 text-supervised-sm text-supervised-ink-3">
       {blocks.map((block, index) => renderBlock(block, index))}
-      <p className="text-supervised-xs text-supervised-ink-4">
-        Door AI gegenereerd. Controleer belangrijke informatie zelf.
-      </p>
+      {showDisclaimer ? (
+        <p className="text-supervised-xs text-supervised-ink-4">
+          Door AI gegenereerd. Controleer belangrijke informatie zelf.
+        </p>
+      ) : null}
     </div>
   );
 }

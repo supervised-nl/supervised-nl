@@ -4,7 +4,7 @@ import { LogoMark } from "@/components/logo-mark";
 import { ResetPasswordForm } from "./reset-password-form";
 
 export const metadata: Metadata = {
-  title: "Nieuw wachtwoord — Supervised Coach",
+  title: "Nieuw wachtwoord | Supervised Coach",
 };
 
 export default function ResetPasswordPage() {

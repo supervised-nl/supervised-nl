@@ -1,11 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { useFormStatus } from "react-dom";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+
+const REFLECTION_MAX = 280;
+
+function SubmitButton({ isEdit }: { isEdit: boolean }) {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending ? "Wordt opgeslagen…" : isEdit ? "Wijzigingen opslaan" : "Ik heb dit gedaan"}
+    </Button>
+  );
+}
 
 interface CompletionFormProps {
   action: (formData: FormData) => Promise<void>;
@@ -13,13 +25,17 @@ interface CompletionFormProps {
     timeSavedMinutes?: number | null;
     sharedPrompt?: string | null;
     sharedResult?: string | null;
+    reflection?: string | null;
   };
 }
 
 export function CompletionForm({ action, defaultValues }: CompletionFormProps) {
   const isEdit = defaultValues !== undefined;
   const [showOptional, setShowOptional] = useState(
-    !!(defaultValues?.sharedPrompt || defaultValues?.sharedResult),
+    !!(defaultValues?.sharedPrompt || defaultValues?.sharedResult || defaultValues?.reflection),
+  );
+  const [reflectionLength, setReflectionLength] = useState(
+    defaultValues?.reflection?.length ?? 0,
   );
 
   return (
@@ -48,7 +64,7 @@ export function CompletionForm({ action, defaultValues }: CompletionFormProps) {
           className="flex w-full items-center justify-between px-4 py-3 text-left text-supervised-sm font-medium text-supervised-ink-2 transition-colors hover:text-supervised-ink-1"
         >
           <span>
-            Prompt en resultaat delen{" "}
+            Prompt, resultaat en reflectie{" "}
             <span className="font-normal text-supervised-ink-4">(optioneel)</span>
           </span>
           <span className="text-supervised-ink-4 text-base leading-none select-none">
@@ -74,6 +90,25 @@ export function CompletionForm({ action, defaultValues }: CompletionFormProps) {
                 defaultValue={defaultValues?.sharedResult ?? undefined}
               />
             </div>
+            <div className="flex flex-col gap-1.5">
+              <div className="flex items-baseline justify-between">
+                <Label htmlFor="reflection">Wat leerde je?</Label>
+                <span className={`text-supervised-xs tabular-nums ${reflectionLength > REFLECTION_MAX - 20 ? "text-destructive" : "text-supervised-ink-4"}`}>
+                  {reflectionLength}/{REFLECTION_MAX}
+                </span>
+              </div>
+              <p className="text-supervised-xs text-supervised-ink-3 -mt-1">
+                Persoonlijke noot voor jezelf, zichtbaar in je voortgang.
+              </p>
+              <Textarea
+                id="reflection"
+                name="reflection"
+                maxLength={REFLECTION_MAX}
+                placeholder="bijv. Ik leerde dat je de toon van de prompt heel specifiek moet maken…"
+                defaultValue={defaultValues?.reflection ?? undefined}
+                onChange={(e) => setReflectionLength(e.target.value.length)}
+              />
+            </div>
           </div>
         ) : (
           <>
@@ -83,11 +118,14 @@ export function CompletionForm({ action, defaultValues }: CompletionFormProps) {
             {defaultValues?.sharedResult != null ? (
               <input type="hidden" name="sharedResult" value={defaultValues.sharedResult} />
             ) : null}
+            {defaultValues?.reflection != null ? (
+              <input type="hidden" name="reflection" value={defaultValues.reflection} />
+            ) : null}
           </>
         )}
       </div>
 
-      <Button type="submit">{isEdit ? "Wijzigingen opslaan" : "Ik heb dit gedaan"}</Button>
+      <SubmitButton isEdit={isEdit} />
     </form>
   );
 }

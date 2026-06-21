@@ -45,7 +45,7 @@ export default async function LeaderboardPage({
         .from("users")
         .select("id, name")
         .eq("organization_id", organizationId)
-        .eq("role", "member"),
+        .in("role", ["member", "admin"]),
       supabase
         .from("challenge_completions")
         .select("user_id, challenge_id, time_saved_minutes, shared_prompt, shared_result")

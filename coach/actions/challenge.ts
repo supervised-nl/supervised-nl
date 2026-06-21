@@ -15,7 +15,13 @@ function buildChallengePrompt(args: {
   toolsUsed: string | null;
   useCases: string | null;
   notes: string | null;
+  previousChallengeTitles: string[];
 }) {
+  const previousBlock =
+    args.previousChallengeTitles.length > 0
+      ? `\nEerder gegeven uitdagingen (vermijd herhaling, bouw voort op wat al geleerd is):\n${args.previousChallengeTitles.map((t) => `- ${t}`).join("\n")}\n`
+      : "";
+
   return `Je schrijft een wekelijkse micro-uitdaging voor het team van een Nederlands MKB-bedrijf dat een AI-workshop heeft gevolgd. Doel: de kennis uit de workshop praktisch laten landen in hun werk.
 
 Bedrijf: ${args.organizationName}${args.sector ? ` (sector: ${args.sector})` : ""}
@@ -26,7 +32,7 @@ Workshopcontext:
 - Gebruikte tools: ${args.toolsUsed ?? "onbekend"}
 - Use cases: ${args.useCases ?? "onbekend"}
 - Notities: ${args.notes ?? "geen"}
-
+${previousBlock}
 Schrijf een korte, concrete uitdaging die een medewerker in maximaal een uur kan uitvoeren met AI, aansluitend op de workshopcontext. Direct, geen jargon, "je/jouw" aanspreekvorm.
 
 Antwoord uitsluitend met geldige JSON in dit exacte formaat, zonder uitleg ervoor of erna:
@@ -80,12 +86,13 @@ export async function generateChallenge(orgId: string) {
 
   const { data: existingChallenges } = await supabase
     .from("challenges")
-    .select("week_number")
+    .select("week_number, title")
     .eq("organization_id", orgId)
     .order("week_number", { ascending: false })
-    .limit(1);
+    .limit(10);
 
   const weekNumber = (existingChallenges?.[0]?.week_number ?? 0) + 1;
+  const previousChallengeTitles = (existingChallenges ?? []).map((c) => c.title).reverse();
 
   let generated: { title: string; description: string; expected_outcome: string | null };
 
@@ -104,6 +111,7 @@ export async function generateChallenge(orgId: string) {
             toolsUsed: context?.tools_used ?? null,
             useCases: context?.use_cases ?? null,
             notes: context?.notes ?? null,
+            previousChallengeTitles,
           }),
         },
       ],

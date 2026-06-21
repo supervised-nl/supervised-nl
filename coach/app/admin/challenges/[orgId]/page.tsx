@@ -35,7 +35,7 @@ export default async function ChallengesPage({
       <BackLink href={`/admin/organizations/${orgId}`}>Terug naar {org.name}</BackLink>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-supervised-xl font-light text-supervised-ink-1">Uitdagingen — {org.name}</h1>
+        <h1 className="text-supervised-xl font-light text-supervised-ink-1">Uitdagingen {org.name}</h1>
         <GenerateChallengeButton action={generateChallenge.bind(null, orgId)} />
       </div>
 

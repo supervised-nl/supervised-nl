@@ -4,7 +4,7 @@ import { LogoMark } from "@/components/logo-mark";
 import { ForgotPasswordForm } from "./forgot-password-form";
 
 export const metadata: Metadata = {
-  title: "Wachtwoord vergeten — Supervised Coach",
+  title: "Wachtwoord vergeten | Supervised Coach",
 };
 
 export default function ForgotPasswordPage() {

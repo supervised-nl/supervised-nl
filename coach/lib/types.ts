@@ -154,6 +154,8 @@ export type Database = {
           shared_prompt: string | null;
           shared_result: string | null;
           time_saved_minutes: number | null;
+          reflection: string | null;
+          is_team_prompt: boolean;
         };
         Insert: {
           id?: string;
@@ -164,6 +166,8 @@ export type Database = {
           shared_prompt?: string | null;
           shared_result?: string | null;
           time_saved_minutes?: number | null;
+          reflection?: string | null;
+          is_team_prompt?: boolean;
         };
         Update: {
           id?: string;
@@ -174,6 +178,8 @@ export type Database = {
           shared_prompt?: string | null;
           shared_result?: string | null;
           time_saved_minutes?: number | null;
+          reflection?: string | null;
+          is_team_prompt?: boolean;
         };
         Relationships: [];
       };
