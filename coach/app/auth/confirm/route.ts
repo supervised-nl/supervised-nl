@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
     if (!error) {
       return NextResponse.redirect(new URL(next, origin));
     }
+    console.error("auth/confirm verifyOtp mislukt:", error.message, { type });
   }
 
   return NextResponse.redirect(new URL("/login?error=link-verlopen", origin));

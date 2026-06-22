@@ -294,7 +294,7 @@ export async function resendInvite(userId: string, orgId: string) {
   if (!user.email) throw new Error("Gebruiker heeft geen e-mailadres.");
 
   const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
-    type: "recovery",
+    type: "magiclink",
     email: user.email,
   });
 
@@ -302,7 +302,7 @@ export async function resendInvite(userId: string, orgId: string) {
     throw new Error("Link kon niet worden aangemaakt.");
   }
 
-  const confirmUrl = `${appUrl}/auth/confirm?token_hash=${linkData.properties.hashed_token}&type=recovery&next=/reset-password`;
+  const confirmUrl = `${appUrl}/auth/confirm?token_hash=${linkData.properties.hashed_token}&type=magiclink&next=/reset-password`;
 
   const { getResend } = await import("@/lib/resend");
   try {
