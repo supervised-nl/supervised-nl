@@ -1,3 +1,4 @@
+import { challengeReminderEmail } from "@/lib/email";
 import { getResend } from "@/lib/resend";
 import { createServiceClient } from "@/lib/supabase/service";
 
@@ -62,12 +63,20 @@ export async function GET(request: Request) {
     );
 
     for (const member of recipients) {
+      const email = challengeReminderEmail({
+        firstName: member.name ? member.name.split(" ")[0] : "",
+        challengeTitle: challenge.title,
+        challengeDescription: challenge.description,
+        socialProof,
+        appUrl,
+      });
       try {
         await resend.emails.send({
           from: "Supervised Coach <coach@supervised.nl>",
           to: member.email!,
-          subject: `Nog niet gedaan: ${challenge.title}`,
-          text: `Hoi${member.name ? ` ${member.name.split(" ")[0]}` : ""},\n\nJe hebt de uitdaging van deze week nog niet afgerond:\n\n${challenge.title}\n\n${challenge.description}\n\n${socialProof ? `${socialProof}\n\n` : ""}Het kost maar een paar minuten. Ga naar ${appUrl}/dashboard/member om te beginnen.\n\nGroeten,\nSupervised Coach`,
+          subject: email.subject,
+          html: email.html,
+          text: email.text,
         });
         totalSent++;
       } catch (err) {

@@ -9,6 +9,7 @@ export interface NavLink {
 const MEMBER_LINKS: NavLink[] = [
   { href: "/dashboard/member", label: "Uitdaging", exact: true },
   { href: "/dashboard/member/history", label: "Voortgang", exact: false },
+  { href: "/dashboard/member/teamprompts", label: "Teamprompts", exact: false },
   { href: "/dashboard/leaderboard", label: "Ranglijst", exact: false },
   { href: "/dashboard/member/qa", label: "Vraagbaak", exact: false },
 ];

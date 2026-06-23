@@ -253,7 +253,14 @@ export default async function DashboardAdminPage({
                   <div className="flex flex-col gap-0.5 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="text-supervised-sm font-medium text-supervised-ink-1 leading-snug">
-                        {nameById.get(completion.user_id) ?? "Onbekend"}
+                        <Link
+                          href={viewingAsSuperAdmin
+                            ? `/dashboard/admin/members/${completion.user_id}?orgId=${organizationId}`
+                            : `/dashboard/admin/members/${completion.user_id}`}
+                          className="hover:text-supervised-ink-2 transition-colors"
+                        >
+                          {nameById.get(completion.user_id) ?? "Onbekend"}
+                        </Link>
                         <span className="font-normal text-supervised-ink-3">
                           {" "}· {titleByChallenge.get(completion.challenge_id) ?? "?"}
                         </span>

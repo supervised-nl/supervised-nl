@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 import { requireRole } from "@/lib/auth";
+import { inviteEmail, resendInviteEmail } from "@/lib/email";
 import { createServiceClient } from "@/lib/supabase/service";
 import type { UserRole } from "@/lib/types";
 
@@ -174,13 +175,19 @@ export async function inviteUser(orgId: string, formData: FormData) {
   // server-side zonder PKCE-verifier, dus ook in de browser van de genodigde.
   const confirmUrl = `${appUrl}/auth/confirm?token_hash=${linkData.properties.hashed_token}&type=recovery&next=/reset-password`;
 
+  const emailContent = inviteEmail({
+    name: name.trim(),
+    orgName: org?.name ?? "je organisatie",
+    confirmUrl,
+  });
   const { getResend } = await import("@/lib/resend");
   try {
     await getResend().emails.send({
       from: "Supervised Coach <coach@supervised.nl>",
       to: email.trim(),
-      subject: `Je bent uitgenodigd voor Supervised Coach`,
-      text: `Hoi ${name.trim()},\n\nJe bent uitgenodigd voor Supervised Coach van ${org?.name ?? "je organisatie"}.\n\nKlik op de link hieronder om je wachtwoord in te stellen en aan de slag te gaan:\n\n${confirmUrl}\n\nDe link is 24 uur geldig.\n\nGroeten,\nSupervised Coach`,
+      subject: emailContent.subject,
+      html: emailContent.html,
+      text: emailContent.text,
     });
   } catch {
     throw new Error("Uitnodigingsmail kon niet worden verzonden.");
@@ -261,12 +268,18 @@ export async function bulkInviteUsers(
 
       const confirmUrl = `${appUrl}/auth/confirm?token_hash=${linkData.properties.hashed_token}&type=recovery&next=/reset-password`;
 
+      const emailContent = inviteEmail({
+        name,
+        orgName: org?.name ?? "je organisatie",
+        confirmUrl,
+      });
       const { getResend } = await import("@/lib/resend");
       await getResend().emails.send({
         from: "Supervised Coach <coach@supervised.nl>",
         to: email,
-        subject: "Je bent uitgenodigd voor Supervised Coach",
-        text: `Hoi ${name},\n\nJe bent uitgenodigd voor Supervised Coach van ${org?.name ?? "je organisatie"}.\n\nKlik op de link hieronder om je wachtwoord in te stellen:\n\n${confirmUrl}\n\nDe link is 24 uur geldig.\n\nGroeten,\nSupervised Coach`,
+        subject: emailContent.subject,
+        html: emailContent.html,
+        text: emailContent.text,
       });
 
       sent++;
@@ -311,13 +324,19 @@ export async function resendInvite(userId: string, orgId: string) {
 
   const confirmUrl = `${appUrl}/auth/confirm?token_hash=${linkData.properties.hashed_token}&type=recovery&next=/reset-password`;
 
+  const emailContent = resendInviteEmail({
+    name: user.name ?? "",
+    orgName: org?.name ?? "je organisatie",
+    confirmUrl,
+  });
   const { getResend } = await import("@/lib/resend");
   try {
     await getResend().emails.send({
       from: "Supervised Coach <coach@supervised.nl>",
       to: user.email,
-      subject: "Stel je wachtwoord in voor Supervised Coach",
-      text: `Hoi ${user.name},\n\nJe kunt via onderstaande link je wachtwoord instellen voor Supervised Coach van ${org?.name ?? "je organisatie"}.\n\n${confirmUrl}\n\nDe link is 24 uur geldig.\n\nGroeten,\nSupervised Coach`,
+      subject: emailContent.subject,
+      html: emailContent.html,
+      text: emailContent.text,
     });
   } catch {
     throw new Error("E-mail kon niet worden verstuurd.");

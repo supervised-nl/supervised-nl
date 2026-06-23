@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import { anthropic } from "@/lib/anthropic";
 import { requireRole } from "@/lib/auth";
+import { challengeAnnouncementEmail } from "@/lib/email";
 import { getResend } from "@/lib/resend";
 import { createServiceClient } from "@/lib/supabase/service";
 
@@ -256,12 +257,19 @@ export async function activateChallenge(challengeId: string) {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://coach.supervised.nl";
     for (const member of (members ?? [])) {
       if (!member.email) continue;
+      const email = challengeAnnouncementEmail({
+        firstName: member.name ? member.name.split(" ")[0] : "",
+        challengeTitle: challenge.title,
+        challengeDescription: challenge.description,
+        appUrl,
+      });
       try {
         await getResend().emails.send({
           from: "Supervised Coach <coach@supervised.nl>",
           to: member.email,
-          subject: `Nieuwe uitdaging: ${challenge.title}`,
-          text: `Hoi${member.name ? ` ${member.name.split(" ")[0]}` : ""},\n\nEr staat een nieuwe uitdaging voor je klaar.\n\n${challenge.title}\n\n${challenge.description}\n\nGa naar ${appUrl}/dashboard/member om aan de slag te gaan.\n\nGroeten,\nSupervised Coach`,
+          subject: email.subject,
+          html: email.html,
+          text: email.text,
         });
       } catch {
         throw new Error("E-mail kon niet verzonden worden. Controleer of het e-mailadres klopt.");
@@ -294,11 +302,18 @@ export async function sendChallengeMail(challengeId: string, _formData: FormData
 
   for (const member of members ?? []) {
     if (!member.email) continue;
+    const email = challengeAnnouncementEmail({
+      firstName: member.name ? member.name.split(" ")[0] : "",
+      challengeTitle: challenge.title,
+      challengeDescription: challenge.description,
+      appUrl,
+    });
     await getResend().emails.send({
       from: "Supervised Coach <coach@supervised.nl>",
       to: member.email,
-      subject: `Nieuwe uitdaging: ${challenge.title}`,
-      text: `Hoi${member.name ? ` ${member.name.split(" ")[0]}` : ""},\n\nEr staat een nieuwe uitdaging voor je klaar.\n\n${challenge.title}\n\n${challenge.description}\n\nGa naar ${appUrl}/dashboard/member om aan de slag te gaan.\n\nGroeten,\nSupervised Coach`,
+      subject: email.subject,
+      html: email.html,
+      text: email.text,
     });
   }
 

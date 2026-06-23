@@ -2,6 +2,7 @@ import { PageWrapper } from "@/components/page-wrapper";
 import { requireRole } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { eyebrowClass } from "@/lib/ui";
+import { calculateStreak } from "@/lib/utils";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric" });
@@ -12,24 +13,6 @@ function formatTime(minutes: number) {
   const h = Math.floor(minutes / 60);
   const m = minutes % 60;
   return m > 0 ? `${h}u ${m}m` : `${h}u`;
-}
-
-function calculateStreak(
-  completions: Array<{ challenge_id: string }>,
-  challenges: Array<{ id: string; week_number: number }>,
-): number {
-  const weekByChallenge = new Map(challenges.map((c) => [c.id, c.week_number]));
-  const completedWeeks = new Set(
-    completions.map((c) => weekByChallenge.get(c.challenge_id)).filter((w): w is number => w !== undefined),
-  );
-  if (completedWeeks.size === 0) return 0;
-  const maxWeek = Math.max(...completedWeeks);
-  let streak = 0;
-  for (let w = maxWeek; w >= 1; w--) {
-    if (completedWeeks.has(w)) streak++;
-    else break;
-  }
-  return streak;
 }
 
 export default async function HistoryPage() {

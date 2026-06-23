@@ -21,6 +21,7 @@ function SubmitButton({ isEdit }: { isEdit: boolean }) {
 
 interface CompletionFormProps {
   action: (formData: FormData) => Promise<void>;
+  reflectionPrompt?: string;
   defaultValues?: {
     timeSavedMinutes?: number | null;
     sharedPrompt?: string | null;
@@ -29,7 +30,7 @@ interface CompletionFormProps {
   };
 }
 
-export function CompletionForm({ action, defaultValues }: CompletionFormProps) {
+export function CompletionForm({ action, reflectionPrompt, defaultValues }: CompletionFormProps) {
   const isEdit = defaultValues !== undefined;
   const [showOptional, setShowOptional] = useState(
     !!(defaultValues?.sharedPrompt || defaultValues?.sharedResult || defaultValues?.reflection),
@@ -92,7 +93,7 @@ export function CompletionForm({ action, defaultValues }: CompletionFormProps) {
             </div>
             <div className="flex flex-col gap-1.5">
               <div className="flex items-baseline justify-between">
-                <Label htmlFor="reflection">Wat leerde je?</Label>
+                <Label htmlFor="reflection">{reflectionPrompt ?? "Wat leerde je?"}</Label>
                 <span className={`text-supervised-xs tabular-nums ${reflectionLength > REFLECTION_MAX - 20 ? "text-destructive" : "text-supervised-ink-4"}`}>
                   {reflectionLength}/{REFLECTION_MAX}
                 </span>
@@ -104,7 +105,6 @@ export function CompletionForm({ action, defaultValues }: CompletionFormProps) {
                 id="reflection"
                 name="reflection"
                 maxLength={REFLECTION_MAX}
-                placeholder="bijv. Ik leerde dat je de toon van de prompt heel specifiek moet maken…"
                 defaultValue={defaultValues?.reflection ?? undefined}
                 onChange={(e) => setReflectionLength(e.target.value.length)}
               />

@@ -6,11 +6,13 @@ import { completeChallenge, updateCompletion } from "@/actions/completion";
 import { ChallengeCard } from "@/components/challenge-card";
 import { CompletionForm } from "@/components/completion-form";
 import { CompletionView } from "@/components/completion-view";
+import { HintButton } from "@/components/hint-button";
 import { PageWrapper } from "@/components/page-wrapper";
 import { requireRole } from "@/lib/auth";
 import { eyebrowClass } from "@/lib/ui";
 import { createClient } from "@/lib/supabase/server";
 import { createServiceClient } from "@/lib/supabase/service";
+import { calculateStreak, getReflectionPrompt } from "@/lib/utils";
 
 export default async function DashboardMemberPage({
   searchParams,
@@ -81,24 +83,6 @@ export default async function DashboardMemberPage({
         .select("id, week_number")
         .eq("organization_id", organizationId),
     ]);
-
-  function calculateStreak(
-    completions: Array<{ challenge_id: string }>,
-    challenges: Array<{ id: string; week_number: number }>,
-  ): number {
-    const weekByChallenge = new Map(challenges.map((c) => [c.id, c.week_number]));
-    const completedWeeks = new Set(
-      completions.map((c) => weekByChallenge.get(c.challenge_id)).filter((w): w is number => w !== undefined),
-    );
-    if (completedWeeks.size === 0) return 0;
-    const maxWeek = Math.max(...completedWeeks);
-    let streak = 0;
-    for (let w = maxWeek; w >= 1; w--) {
-      if (completedWeeks.has(w)) streak++;
-      else break;
-    }
-    return streak;
-  }
 
   const streak = !viewingAsSuperAdmin
     ? calculateStreak(allUserCompletions ?? [], allChallenges ?? [])
@@ -187,6 +171,7 @@ export default async function DashboardMemberPage({
         {/* Primary action immediately after the challenge — no scroll required */}
         {viewingAsSuperAdmin ? null : (
           <div className="flex flex-col gap-4">
+            {!ownCompletion ? <HintButton challengeId={challenge.id} /> : null}
             {ownCompletion ? (
               <CompletionView
                 completion={ownCompletion}
@@ -195,7 +180,10 @@ export default async function DashboardMemberPage({
                 teamTotalCount={teamTotalCount}
               />
             ) : (
-              <CompletionForm action={completeChallenge.bind(null, challenge.id)} />
+              <CompletionForm
+                action={completeChallenge.bind(null, challenge.id)}
+                reflectionPrompt={getReflectionPrompt(challenge.week_number)}
+              />
             )}
 
             {streak >= 2 ? (
