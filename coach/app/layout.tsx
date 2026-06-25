@@ -22,17 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl" className={generalSans.variable}>
+    <html lang="nl" className={generalSans.variable} suppressHydrationWarning>
       <body className="antialiased">
+        <script dangerouslySetInnerHTML={{ __html: `(function(){var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';document.documentElement.setAttribute('data-theme',t);})();` }} />
         <div id="glow" aria-hidden="true" />
         <div id="noise" aria-hidden="true" />
-        <div id="glow-pulses" aria-hidden="true">
-          <span className="glow-pulse glow-pulse-1" />
-          <span className="glow-pulse glow-pulse-2" />
-          <span className="glow-pulse glow-pulse-3" />
-          <span className="glow-pulse glow-pulse-4" />
-          <span className="glow-pulse glow-pulse-5" />
-        </div>
         {children}
         <Analytics />
         <SpeedInsights />

@@ -19,8 +19,8 @@ export default async function LoginPage({
     <main className="flex min-h-screen flex-col items-center justify-center px-6">
       <div className="flex w-full max-w-sm flex-col gap-8">
         <div className="flex items-center gap-[0.382rem] self-center leading-none opacity-80">
-          <LogoMark className="h-[1rem] w-[1rem] shrink-0 text-supervised-ink-1" />
-          <span className="text-supervised-xs leading-none font-normal tracking-[0.02em] text-supervised-ink-2 lowercase">
+          <LogoMark className="h-[1.4rem] w-[1.4rem] shrink-0 translate-y-[0.05rem] text-supervised-ink-1" />
+          <span className="text-[0.764rem] leading-none font-normal tracking-[0.02em] text-supervised-ink-2 lowercase">
             supervised coach
           </span>
         </div>
