@@ -240,7 +240,8 @@
 </div>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
-<script defer src="/js/site.js"></script>
+{{ $js := resources.Get "js/site.js" | minify | fingerprint }}
+<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" crossorigin="anonymous"></script>
 
 </body>
 </html>
