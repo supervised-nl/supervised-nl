@@ -96,12 +96,14 @@ html[data-theme="light"] #content .hero-image img { box-shadow: 0 24px 80px rgba
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.382rem 0;
-  margin-left: clamp(0.618rem, 1.618vw, 1.618rem);
+  padding: 0.618rem;
+  margin-left: clamp(0rem, 1.618vw, 1rem);
   display: flex;
   align-items: center;
   flex-shrink: 0;
   transform: translateY(0.05rem);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 #theme-toggle span {
   display: block;

@@ -66,7 +66,8 @@
       themeBtn.setAttribute('data-active', dark ? 'dark' : 'light');
       themeBtn.setAttribute('aria-label', dark ? 'Schakel naar licht' : 'Schakel naar donker');
     }
-    themeBtn.addEventListener('click', function() {
+    function doToggle(e) {
+      e.preventDefault();
       var next = isDarkActive() ? 'light' : 'dark';
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.documentElement.classList.add('theme-transitioning');
@@ -75,7 +76,9 @@
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
       syncToggle();
-    });
+    }
+    themeBtn.addEventListener('touchend', doToggle, { passive: false });
+    themeBtn.addEventListener('click', doToggle);
     syncToggle();
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncToggle);
   }
